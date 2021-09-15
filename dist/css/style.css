@@ -1,4 +1,21 @@
+body,
+html {
+  width: 100%;
+  height: 100vh;
+}
 
+#content {
+  display: flex;
+  height: 100%;
+}
+
+#controls-container {
+  background-color: gray;
+  width: 250px;
+}
+
+#project-container {
+  width: 100%;
+}
 
 /*# sourceMappingURL=style.css.map */
-
