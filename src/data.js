@@ -9,10 +9,13 @@ const data = (() => {
     projects.push(project);
   }
 
+  const getTasks = () => tasks;
+
   return {
     tasks,
     projects,
-    newProject
+    newProject,
+    getTasks
   }
 })()
 

@@ -14,8 +14,8 @@ function loadEvents(){
   projectNameInput.parentElement.addEventListener('submit', (e) => {
     data.newProject(projectNameInput.value);
     clearInput(projectNameInput);
-    projectNameInput.classList.toggle('hidden')
-    console.log(data.projects);
+    //loadProject(projectName.value);
+    projectNameInput.classList.toggle('hidden');
 
   })
 
