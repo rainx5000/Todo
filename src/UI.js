@@ -10,7 +10,6 @@ function loadEvents(){
   const addProjectBtn = document.querySelector('#add-project');
   const projectNameInput = document.querySelector('.project-name-input');
   const permanentTabs = document.querySelector('#permanent-categories');
-  console.log(permanentTabs)
   addProjectBtn.addEventListener('click', (e) => {
     projectNameInput.classList.toggle('hidden');
   });
@@ -26,15 +25,11 @@ function loadEvents(){
   })
 
   const permanentTabsArray = Array.from(permanentTabs.children);
-
-  console.log(permanentTabsArray[0].textContent)
   permanentTabsArray.forEach(btn => {
     btn.addEventListener('click', (e) => {
       loadProject(e.target.textContent)
     })
-    console.log('hi')
   })
-
   
 }
 
@@ -70,6 +65,8 @@ function createProject(name) {
   //loadTasks(taskContainer);
 
   project.append(newTaskBtn, title, tasksContainer);
+
+  newTaskBtn.addEventListener('click', (e) => document.querySelector('#new-task-form').classList.toggle('hidden'));
   return project
 }
 
