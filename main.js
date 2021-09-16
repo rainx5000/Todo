@@ -16,7 +16,17 @@
   \*******************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"loadPage\": () => (/* binding */ loadPage)\n/* harmony export */ });\nfunction loadPage() {\n  //all of the clickevents that we need, like all of the buttons on the controls, should be a function\n  loadEvents();\n}\n\nfunction loadEvents(){\n  const addProjectBtn = document.querySelector('#add-project');\n  addProjectBtn.addEventListener('click', (e) => {\n    document.querySelector('.project-name-input').classList.toggle('hidden');\n  }) \n}\n\n\n\n//# sourceURL=webpack://todo/./src/UI.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"loadPage\": () => (/* binding */ loadPage)\n/* harmony export */ });\n/* harmony import */ var _data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./data */ \"./src/data.js\");\n\n\nfunction loadPage() {\n  //all of the clickevents that we need, like all of the buttons on the controls, should be a function\n  loadEvents();\n}\n\nfunction loadEvents(){\n  const addProjectBtn = document.querySelector('#add-project');\n  const projectNameInput = document.querySelector('.project-name-input');\n  addProjectBtn.addEventListener('click', (e) => {\n    projectNameInput.classList.toggle('hidden');\n  });\n  projectNameInput.parentElement.addEventListener('submit', (e) => {\n    _data__WEBPACK_IMPORTED_MODULE_0__.data.newProject(projectNameInput.value);\n    clearInput(projectNameInput);\n    projectNameInput.classList.toggle('hidden')\n    console.log(_data__WEBPACK_IMPORTED_MODULE_0__.data.projects);\n\n  })\n\n  \n}\n\nfunction clearInput(inputs) {\n  inputs.value = '';\n}\n\n\n\n//# sourceURL=webpack://todo/./src/UI.js?");
+
+/***/ }),
+
+/***/ "./src/data.js":
+/*!*********************!*\
+  !*** ./src/data.js ***!
+  \*********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"data\": () => (/* binding */ data)\n/* harmony export */ });\n/* harmony import */ var _project__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./project */ \"./src/project.js\");\n\n\nconst data = (() => {\n  const tasks = [];\n  const projects = [];\n\n  const newProject = (name) => {\n    const project = (0,_project__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(name);\n    projects.push(project);\n  }\n\n  return {\n    tasks,\n    projects,\n    newProject\n  }\n})()\n\n\n\n//# sourceURL=webpack://todo/./src/data.js?");
 
 /***/ }),
 
@@ -27,6 +37,16 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _UI_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UI.js */ \"./src/UI.js\");\n\n\n(0,_UI_js__WEBPACK_IMPORTED_MODULE_0__.loadPage)();\n\n//# sourceURL=webpack://todo/./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/project.js":
+/*!************************!*\
+  !*** ./src/project.js ***!
+  \************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ Project)\n/* harmony export */ });\n\nfunction Project(name, array) {\n  const projectName = name;\n\n  return {\n    projectName\n  }\n}\n\n//# sourceURL=webpack://todo/./src/project.js?");
 
 /***/ })
 
