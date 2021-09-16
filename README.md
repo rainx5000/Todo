@@ -73,8 +73,18 @@ On loadup
 1: all event listeners that we need to be loaded in
 2: Our three projects (Inbox, today, this week, should be created and loaded up)
 
+loadProject(projectName)
+
+This function would take the name of project as the argument, it will search for it from the projects array, Then takes that object and appends the project to the project container with its tasks
+
+our Project factory function will have methods where we can filter out the allTasksArray, and save it to the filteredTasks array.
 
 
+loadProject(projectName)
+This function will remove the last project container
+Will append the projectName to the projectContainer
+
+we should have a controller for our projects and tasks
 
 
 

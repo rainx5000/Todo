@@ -17,7 +17,7 @@ function loadEvents(){
     clearInput(projectNameInput);
     //loadProject(projectName.value);
     projectNameInput.classList.toggle('hidden');
-
+    console.log(data.projects)
   })
 
   
@@ -34,5 +34,7 @@ function createProjectTab(projectName) {
   tabContainer.prepend(tab);
   //add the option to delete this tab, also it should be a div rather than a button
 }
+
+
 
 export { loadPage }
