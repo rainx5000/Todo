@@ -9,16 +9,30 @@ function loadPage() {
 function loadEvents(){
   const addProjectBtn = document.querySelector('#add-project');
   const projectNameInput = document.querySelector('.project-name-input');
+  const permanentTabs = document.querySelector('#permanent-categories');
+  console.log(permanentTabs)
   addProjectBtn.addEventListener('click', (e) => {
     projectNameInput.classList.toggle('hidden');
   });
+
   projectNameInput.parentElement.addEventListener('submit', (e) => {
     data.newProject(projectNameInput.value);
     createProjectTab(projectNameInput.value);
+    loadProject(projectNameInput.value);
     clearInput(projectNameInput);
-    //loadProject(projectName.value);
+
     projectNameInput.classList.toggle('hidden');
-    console.log(data.projects)
+    // console.log(data.projects)
+  })
+
+  const permanentTabsArray = Array.from(permanentTabs.children);
+
+  console.log(permanentTabsArray[0].textContent)
+  permanentTabsArray.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      loadProject(e.target.textContent)
+    })
+    console.log('hi')
   })
 
   
@@ -45,13 +59,22 @@ function createProject(name) {
   const project = document.createElement("div");
   const title = document.createElement("h2");
   const tasksContainer = document.createElement("div");
-
+  const newTaskBtn = document.createElement('button');
+  
   project.classList.add('project');
   tasksContainer.classList.add('tasks-container');
 
   title.textContent = name;
-  project.append(title, tasksContainer);
+  newTaskBtn.textContent = "Add Task";
+
+  //loadTasks(taskContainer);
+
+  project.append(newTaskBtn, title, tasksContainer);
   return project
+}
+
+function loadTasks(container, projectName) {
+
 }
 
 
