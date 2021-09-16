@@ -69,6 +69,11 @@ When a user clicks add project btn:
 
 
 
+On loadup 
+1: all event listeners that we need to be loaded in
+2: Our three projects (Inbox, today, this week, should be created and loaded up)
+
+
 
 
 
