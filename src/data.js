@@ -1,4 +1,5 @@
 import Project from './project'
+import Task from './task';
 
 const data = (() => {
   const tasks = [];
@@ -12,6 +13,10 @@ const data = (() => {
     const project = Project(name);
     projects.push(project);
   }
+  const newTask = (title) => {
+    const task = Task(title);
+    tasks.push(task);
+  }
 
   const getTasks = () => tasks;
 
@@ -19,6 +24,7 @@ const data = (() => {
     tasks,
     projects,
     newProject,
+    newTask,
     getTasks
   }
 })()
