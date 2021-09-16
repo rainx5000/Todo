@@ -81,11 +81,30 @@ our Project factory function will have methods where we can filter out the allTa
 
 
 loadProject(projectName)
-This function will remove the last project container
+This function will remove all children(last project) from the project-container
 Will append the projectName to the projectContainer
+
+createProject(projectName) should return a project created with DOM, with a task-container, create a class name to target it. 
+
+
 
 we should have a controller for our projects and tasks
 
+When loadProject('Inbox') runs, eventually we will the project container for the user to see, with all its tasks.
+
+Inside of it, we will have a function that creates the project container
+
+Then we will have a function, that has a parameter that will take that same project container, and will load the tasks that match the project name
+
+loadProject('Inbox') {
+  const project = createProject('Inbox'); // project is the DOM container
+  loadTasks(project) //this will append all tasks to the project
+}
+
+loadTasks(project) {
+  const tasks = data.filterByName(project.name);
+  tasks.forEach(append to the project)
+}
 
 
 
