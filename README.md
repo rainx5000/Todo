@@ -107,6 +107,9 @@ loadTasks(project) {
 }
 
 
+if task property project is undefined, that task would go under Inbox
+
+
 
 
 

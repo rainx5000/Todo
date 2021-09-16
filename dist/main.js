@@ -56,7 +56,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \*********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ Task)\n/* harmony export */ });\n//factory function that creates a task object, then will export to data.js\n\nfunction Task(taskTitle, taskDesc, taskPriority, taskDate, taskProject) {\n    const title = taskTitle;\n    const description = taskDesc;\n    const priority = taskPriority;\n    const dueDate = taskDate;\n    const project = taskProject\n  return {\n    title,\n    description,\n    priority,\n    dueDate,\n    project\n  }\n}\n\n//# sourceURL=webpack://todo/./src/task.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ Task)\n/* harmony export */ });\n//factory function that creates a task object, then will export to data.js\n\nfunction Task(taskTitle, taskPriority, taskProject, taskDesc, taskDate) {\n    const title = taskTitle;\n    const description = taskDesc;\n    const priority = taskPriority;\n    const dueDate = taskDate;\n    const project = taskProject\n  return {\n    title,\n    description,\n    priority,\n    dueDate,\n    project\n  }\n}\n\n//# sourceURL=webpack://todo/./src/task.js?");
 
 /***/ })
 
