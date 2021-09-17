@@ -10,29 +10,23 @@ function loadPage() {
 function loadEvents(){
   const addProjectBtn = document.querySelector('#add-project');
   const projectNameInput = document.querySelector('.project-name-input');
-  const permanentTabs = document.querySelector('#permanent-categories');
   const taskForm = document.querySelector('#new-task-form');
+  applyTabClickEvents()
   addProjectBtn.addEventListener('click', (e) => {
     toggleDisplay(projectNameInput)
   });
 
   projectNameInput.parentElement.addEventListener('submit', (e) => {
+    e.preventDefault();
     data.newProject(projectNameInput.value);
     createProjectTab(projectNameInput.value);
     loadProject(projectNameInput.value);
     clearInput(projectNameInput);
+    toggleDisplay(projectNameInput)
     updateForm();
-
-    toggleDisplay(projectNameInputj)
-    // console.log(data.projects)
   })
 
-  const permanentTabsArray = Array.from(permanentTabs.children);
-  permanentTabsArray.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      loadProject(e.target.textContent)
-    })
-  })
+
 
   taskForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -52,8 +46,10 @@ function loadEvents(){
 function createProjectTab(projectName) {
   const tabContainer = document.querySelector('#projects-tab-container')
   const tab = document.createElement('button');
+  tab.addEventListener('click', (e) => loadProject(e.target.textContent))
   tab.textContent = projectName;
   tabContainer.prepend(tab);
+  console.log(data.getProjects())
   //add the option to delete this tab, also it should be a div rather than a button
 }
 
@@ -78,7 +74,7 @@ function createProject(name) {
 
 
 
-  if (data.getProjectByName(name).iseditable()) {
+  if (data.getProjectByName(name).isnonProject()) {
     project.append(title, tasksContainer);
   } else {
     project.append(newTaskBtn, title, tasksContainer);
@@ -146,10 +142,24 @@ function toggleDisplay(element) {
   element.classList.toggle('hidden');
 }
 
-function resetForm() {
-
+function getAllTabs() {
+  const permanentTabs = document.querySelector('#permanent-categories');
+  const projectTabs = document.querySelector('#projects-tab-container');
+  const tabsArray = Array.from(permanentTabs.children).concat(Array.from(projectTabs.children));
+  return tabsArray;
 }
 
+function applyTabClickEvents() {
+  const eventHandler = (e) => {
+      loadProject(e.target.textContent)
+  }
+  getAllTabs().forEach(btn => btn.removeEventListener('click', eventHandler))
+  getAllTabs().forEach(btn => btn.addEventListener('click', eventHandler))
+}
 
+// let eventHandler = (e) => {
+//   loadProject(e.target.textContent)
+// }
+// applyTabClickEvents(eventHandler)
 
 export { loadPage }

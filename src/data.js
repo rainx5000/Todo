@@ -8,6 +8,7 @@ const data = (() => {
   projects.push(Project("Inbox"));
   projects.push(Project('Today', true));
   projects.push(Project('This Week', true));
+  
 
   const newProject = (name) => {
     const project = Project(name);

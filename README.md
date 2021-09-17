@@ -6,7 +6,7 @@ By default, the user only requires the name of the task, if there is no name, yo
 Our tasks would need:
 
 None-expanded:
-title, dueDate, priority? checklist(radio input) removeBtn(X)
+checkbox(radio input), title, dueDate, priority? editBtn removeBtn(X)
 
 Exanded:
 title
@@ -113,3 +113,4 @@ if task property project is undefined, that task would go under Inbox
 
 
 
+Our tas
