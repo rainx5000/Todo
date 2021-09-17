@@ -1,8 +1,9 @@
 import { data } from "./data";
 
 
-export default function Project(projectName, tasksArray) {
+export default function Project(projectName, perm = false) {
   const name = projectName;
+  const permanent = perm;
   
   let filteredTasks = [];
 
@@ -13,10 +14,12 @@ export default function Project(projectName, tasksArray) {
     //once the scan is complete, we will reassign filteredTasks to this array:
     //filteredTasks = array;
   }
+  const isPermanent = () => permanent;
 
   return {
     name,
     filteredTasks,
-    filterByName
+    filterByName,
+    isPermanent
   }
 }

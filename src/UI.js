@@ -11,8 +11,9 @@ function loadEvents(){
   const addProjectBtn = document.querySelector('#add-project');
   const projectNameInput = document.querySelector('.project-name-input');
   const permanentTabs = document.querySelector('#permanent-categories');
+  const taskForm = document.querySelector('#new-task-form');
   addProjectBtn.addEventListener('click', (e) => {
-    projectNameInput.classList.toggle('hidden');
+    toggleDisplay(projectNameInput)
   });
 
   projectNameInput.parentElement.addEventListener('submit', (e) => {
@@ -22,7 +23,7 @@ function loadEvents(){
     clearInput(projectNameInput);
     updateForm();
 
-    projectNameInput.classList.toggle('hidden');
+    toggleDisplay(projectNameInputj)
     // console.log(data.projects)
   })
 
@@ -32,6 +33,19 @@ function loadEvents(){
       loadProject(e.target.textContent)
     })
   })
+
+  taskForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const taskTitle = document.querySelector('.title').value;
+    const taskPriority = document.querySelector('#priority-select').value;
+    const taskProject = document.querySelector('#project-select').value;
+    data.newTask(taskTitle, taskPriority, taskProject);
+    loadProject(taskProject);
+    toggleDisplay(taskForm);
+
+    clearInput(taskTitle);
+    taskPriority = 'low';
+  }) 
   
 }
 
@@ -66,9 +80,14 @@ function createProject(name) {
 
   //loadTasks(taskContainer);
 
-  project.append(newTaskBtn, title, tasksContainer);
 
-  newTaskBtn.addEventListener('click', (e) => document.querySelector('#new-task-form').classList.toggle('hidden'));
+  if (data.getProjectByName(name).isPermanent()) {
+    project.append(title, tasksContainer);
+  } else {
+    project.append(newTaskBtn, title, tasksContainer);
+  }
+  console.log(data.getProjectByName(name))
+  newTaskBtn.addEventListener('click', (e) => toggleDisplay(document.querySelector('#new-task-form')));
   return project
 }
 
@@ -97,12 +116,19 @@ function updateForm() {
 
   projectList.forEach(name => {
     if (optionList.includes(name)) return;
-    
+
     const option = document.createElement('option');
     option.text = name;
     projectSelect.appendChild(option);
-    console.log(optionList)
   })
+}
+
+function toggleDisplay(element) {
+  element.classList.toggle('hidden');
+}
+
+function resetForm() {
+
 }
 
 

@@ -33,7 +33,7 @@
 
   <form action="#" id="new-task-form" class="hidden">
     <label for="task-title">Task:
-      <input type="text">
+      <input type="text" class="title" required>
     </label>
     <br>
     <label for="task-project">Project:
@@ -44,9 +44,9 @@
     <br>
       <label for="priority"> Priority:
         <select name="priority" id="priority-select">
-          <option value="1">Low</option>
-          <option value="2">Moderate</option>
-          <option value="3">High</option>
+          <option value="Low">Low</option>
+          <option value="Moderate">Moderate</option>
+          <option value="High">High</option>
         </select>
       </label>
 

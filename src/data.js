@@ -6,20 +6,24 @@ const data = (() => {
   const projects = [];
 
   projects.push(Project("Inbox"));
-  projects.push(Project('Today'));
-  projects.push(Project('This Week'));
+  projects.push(Project('Today', true));
+  projects.push(Project('This Week', true));
 
   const newProject = (name) => {
     const project = Project(name);
     projects.push(project);
   }
-  const newTask = (title) => {
-    const task = Task(title);
+  const newTask = (title, priority, project) => {
+    const task = Task(title, priority, project);
     tasks.push(task);
   }
 
   const getTasks = () => tasks;
   const getProjects = () => projects;
+
+  const getProjectByName = (name) => {
+    return getProjects().filter(project => project.name === name)[0];
+  }
 
   return {
     tasks,
@@ -27,7 +31,8 @@ const data = (() => {
     newProject,
     newTask,
     getTasks,
-    getProjects
+    getProjects,
+    getProjectByName
   }
 })()
 
