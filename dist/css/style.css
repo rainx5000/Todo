@@ -50,6 +50,57 @@ html {
 #project-container {
   width: 100%;
 }
+#project-container .tasks-container > * {
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+  height: 40px;
+}
+#project-container .tasks-container > * .task-checkbox-container {
+  width: fit-content;
+  height: 100%;
+  background-color: green;
+  display: flex;
+  flex-direction: row-reverse;
+  border-radius: 50px 0 0 50px;
+}
+#project-container .tasks-container > * .task-checkbox-container :first-child {
+  height: 15px;
+  width: 15px;
+  margin: auto 8px auto 20px;
+  border-radius: 50%;
+}
+#project-container .tasks-container > * .task-title-container {
+  flex: 1;
+  background-color: gray;
+  display: flex;
+}
+#project-container .tasks-container > * .task-title-container :first-child {
+  margin: auto 0;
+  padding-left: 5px;
+}
+#project-container .tasks-container > * .task-due-date-container {
+  background-color: gray;
+  display: flex;
+}
+#project-container .tasks-container > * .task-due-date-container :first-child {
+  margin: auto 8px auto 8px;
+}
+#project-container .tasks-container > * .task-edit-btn,
+#project-container .tasks-container > * .task-remove-btn {
+  background-color: #f3f3a7;
+  font-weight: 700;
+  font-size: 1.5em;
+  border: none;
+  line-height: 0;
+  cursor: pointer;
+}
+#project-container .tasks-container > * .task-remove-btn {
+  background-color: red;
+  font-size: 2.5em;
+  border-radius: 0px 50px 50px 0px;
+  height: 100%;
+}
 
 .hidden {
   display: none;

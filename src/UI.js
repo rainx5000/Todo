@@ -111,18 +111,31 @@ function loadTasks(container, projectName) {
 
 function createTask(taskTitle, taskPriority) {
   const task = document.createElement('div');
+  const checkboxContainer = document.createElement('div');
   const checkbox = document.createElement('input');
+  const titleContainer = document.createElement('div');
   const title = document.createElement('p');
-  const dueDate = document.createElement('input');
+  const dueDateContainer = document.createElement('div');
+  const dueDate = document.createElement('p');
   const editBtn = document.createElement('button');
   const removeBtn = document.createElement('button');
 
   checkbox.type = 'checkbox';
-  dueDate.type = 'date';
+  dueDate.textContent = '10/05/21';
   title.textContent = taskTitle;
-  editBtn.textContent = 'EDIT';
-  removeBtn.textContent = 'DELETE';
-  task.append(checkbox, title, dueDate, editBtn, removeBtn);
+  editBtn.innerHTML = '&#x2699;';
+  removeBtn.innerHTML = '&#215;';
+
+  checkboxContainer.append(checkbox);
+  titleContainer.append(title);
+  dueDateContainer.append(dueDate);
+  task.append(checkboxContainer, titleContainer, dueDateContainer, editBtn, removeBtn);
+
+  checkboxContainer.classList.add('task-checkbox-container');
+  titleContainer.classList.add('task-title-container');
+  dueDateContainer.classList.add('task-due-date-container');
+  editBtn.classList.add('task-edit-btn');
+  removeBtn.classList.add('task-remove-btn');
   return task
 }
 
