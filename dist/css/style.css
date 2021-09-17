@@ -12,6 +12,39 @@ html {
 #controls-container {
   background-color: gray;
   width: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#controls-container #permanent-categories,
+#controls-container #projects-tab-container {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+}
+#controls-container #permanent-categories button,
+#controls-container #projects-tab-container button {
+  border-radius: 50px;
+  border: none;
+  padding: 4px;
+  margin: 5px 0px;
+  cursor: pointer;
+}
+#controls-container #projects-tab-container div {
+  display: flex;
+}
+#controls-container #projects-tab-container div :first-child {
+  flex: 1;
+}
+#controls-container #projects-tab-container button {
+  border-radius: 50px 0 0 50px;
+}
+#controls-container #projects-tab-container .remove-project-btn {
+  font-weight: 700;
+  font-size: 1.5em;
+  padding: 0px 7%;
+  background-color: red;
+  border-radius: 0 50px 50px 0;
 }
 
 #project-container {

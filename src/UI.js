@@ -38,20 +38,36 @@ function loadEvents(){
     toggleDisplay(taskForm);
 
     clearInput(taskTitle);
-    taskPriority.value = 'low';
+    taskPriority.value = 'Low';
   }) 
   
 }
 
 function createProjectTab(projectName) {
-  const tabContainer = document.querySelector('#projects-tab-container')
-  const tab = document.createElement('button');
-  tab.addEventListener('click', (e) => loadProject(e.target.textContent))
-  tab.textContent = projectName;
-  tabContainer.prepend(tab);
+  const tabsContainer = document.querySelector('#projects-tab-container');
+  const tabContainer = document.createElement('div');
+  const projectBtn = document.createElement('button');
+  const removeBtn = document.createElement('button');
+
+  removeBtn.innerHTML = '&#215;';
+  projectBtn.addEventListener('click', (e) => loadProject(e.target.textContent))
+  projectBtn.textContent = projectName;
+  tabsContainer.append(tabContainer);
+  tabContainer.append(projectBtn, removeBtn);
+  removeBtn.classList.add('remove-project-btn');
   console.log(data.getProjects())
   //add the option to delete this tab, also it should be a div rather than a button
 }
+
+// function createProjectTab(projectName) {
+//   const tabContainer = document.querySelector('#projects-tab-container')
+//   const tab = document.createElement('button');
+//   tab.addEventListener('click', (e) => loadProject(e.target.textContent))
+//   tab.textContent = projectName;
+//   tabContainer.append(tab);
+//   console.log(data.getProjects())
+//   //add the option to delete this tab, also it should be a div rather than a button
+// }
 
 function loadProject(projectName) {
   const projectContainer = document.querySelector("#project-container");
@@ -153,6 +169,7 @@ function applyTabClickEvents() {
   const eventHandler = (e) => {
       loadProject(e.target.textContent)
   }
+  console.log(getAllTabs())
   getAllTabs().forEach(btn => btn.removeEventListener('click', eventHandler))
   getAllTabs().forEach(btn => btn.addEventListener('click', eventHandler))
 }
