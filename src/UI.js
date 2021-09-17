@@ -36,20 +36,18 @@ function loadEvents(){
 
   taskForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const taskTitle = document.querySelector('.title').value;
-    const taskPriority = document.querySelector('#priority-select').value;
-    const taskProject = document.querySelector('#project-select').value;
-    data.newTask(taskTitle, taskPriority, taskProject);
-    loadProject(taskProject);
+    const taskTitle = document.querySelector('.title');
+    const taskPriority = document.querySelector('#priority-select');
+    const taskProject = document.querySelector('#project-select');
+    data.newTask(taskTitle.value, taskPriority.value, taskProject.value);
+    loadProject(taskProject.value);
     toggleDisplay(taskForm);
 
     clearInput(taskTitle);
-    taskPriority = 'low';
+    taskPriority.value = 'low';
   }) 
   
 }
-
-
 
 function createProjectTab(projectName) {
   const tabContainer = document.querySelector('#projects-tab-container')
@@ -78,21 +76,42 @@ function createProject(name) {
   title.textContent = name;
   newTaskBtn.textContent = "Add Task";
 
-  //loadTasks(taskContainer);
 
 
-  if (data.getProjectByName(name).isPermanent()) {
+  if (data.getProjectByName(name).iseditable()) {
     project.append(title, tasksContainer);
   } else {
     project.append(newTaskBtn, title, tasksContainer);
   }
-  console.log(data.getProjectByName(name))
+  loadTasks(tasksContainer, name);
   newTaskBtn.addEventListener('click', (e) => toggleDisplay(document.querySelector('#new-task-form')));
   return project
 }
 
 function loadTasks(container, projectName) {
+  const tasksArray = data.getProjectByName(projectName).filterByName(projectName);
+  console.log(tasksArray, projectName);
+  tasksArray.forEach(task => {
+    container.append(createTask(task.title, task.priority));
+  })
 
+}
+
+function createTask(taskTitle, taskPriority) {
+  const task = document.createElement('div');
+  const checkbox = document.createElement('input');
+  const title = document.createElement('p');
+  const dueDate = document.createElement('input');
+  const editBtn = document.createElement('button');
+  const removeBtn = document.createElement('button');
+
+  checkbox.type = 'checkbox';
+  dueDate.type = 'date';
+  title.textContent = taskTitle;
+  editBtn.textContent = 'EDIT';
+  removeBtn.textContent = 'DELETE';
+  task.append(checkbox, title, dueDate, editBtn, removeBtn);
+  return task
 }
 
 
