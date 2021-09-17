@@ -4,6 +4,7 @@ function loadPage() {
   //all of the clickevents that we need, like all of the buttons on the controls, should be a function
   loadEvents();
   loadProject('Inbox');
+  updateForm();
 }
 
 function loadEvents(){
@@ -19,6 +20,7 @@ function loadEvents(){
     createProjectTab(projectNameInput.value);
     loadProject(projectNameInput.value);
     clearInput(projectNameInput);
+    updateForm();
 
     projectNameInput.classList.toggle('hidden');
     // console.log(data.projects)
@@ -86,6 +88,21 @@ function clearContainer(container) {
 
 function clearInput(inputs) {
   inputs.value = '';
+}
+
+function updateForm() {
+  const projectSelect = document.querySelector('#project-select');
+  const projectList = data.getProjects().map(project => project.name);
+  const optionList = Array.from(projectSelect.children).map(option => option.text);
+
+  projectList.forEach(name => {
+    if (optionList.includes(name)) return;
+    
+    const option = document.createElement('option');
+    option.text = name;
+    projectSelect.appendChild(option);
+    console.log(optionList)
+  })
 }
 
 

@@ -19,13 +19,15 @@ const data = (() => {
   }
 
   const getTasks = () => tasks;
+  const getProjects = () => projects;
 
   return {
     tasks,
     projects,
     newProject,
     newTask,
-    getTasks
+    getTasks,
+    getProjects
   }
 })()
 

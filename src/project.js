@@ -1,8 +1,8 @@
 import { data } from "./data";
 
 
-export default function Project(name, tasksArray) {
-  const projectName = name;
+export default function Project(projectName, tasksArray) {
+  const name = projectName;
   
   let filteredTasks = [];
 
@@ -15,7 +15,7 @@ export default function Project(name, tasksArray) {
   }
 
   return {
-    projectName,
+    name,
     filteredTasks,
     filterByName
   }
