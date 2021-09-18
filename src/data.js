@@ -14,8 +14,8 @@ const data = (() => {
     const project = Project(name);
     projects.push(project);
   }
-  const newTask = (title, priority, project) => {
-    const task = Task(title, priority, project);
+  const newTask = (title, priority, project, description, date) => {
+    const task = Task(title, priority, project, description, date);
     tasks.push(task);
   }
 

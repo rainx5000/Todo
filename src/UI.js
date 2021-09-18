@@ -8,15 +8,49 @@ function loadPage() {
 }
 
 function loadEvents(){
-  const addProjectBtn = document.querySelector('#add-project');
-  const projectNameInput = document.querySelector('.project-name-input');
+  loadProjectTabClickEvents();
+  loadAddProjectBtnEvent();
+  loadNewProjectSubmitEvent();
+  loadTaskFormSubmitEvent();
+}
+
+const taskDisplayController = (() => {
+  const title = document.querySelector('.title');
+  const priority = document.querySelector('#priority-select');
+  const project = document.querySelector('#project-select');
+  const description = document.querySelector('.description-input');
+  const date = document.querySelector('#date');
+  const btn = document.querySelector('.submit-task-btn');
+  return {title, priority, project, description, date, btn};
+})()
+
+function loadTaskFormSubmitEvent() {
   const taskForm = document.querySelector('#new-task-form');
-  applyTabClickEvents()
-  addProjectBtn.addEventListener('click', (e) => {
+
+  taskForm.addEventListener('submit', (e) => { //create a function that only does this
+    e.preventDefault();
+    const task = taskDisplayController;
+
+    data.newTask(task.title.value, task.priority.value, task.project.value, task.description.value, task.date.value);
+    loadProject(task.project.value);
+    toggleDisplay(taskForm);
+    resetForm();
+  }) 
+}
+
+
+
+function loadAddProjectBtnEvent() {
+  const projectNameInput = document.querySelector('.project-name-input');
+  const addProjectBtn = document.querySelector('#add-project');
+  addProjectBtn.addEventListener('click', (e) => { //create a function that only does this
     toggleDisplay(projectNameInput)
   });
+}
 
-  projectNameInput.parentElement.addEventListener('submit', (e) => {
+function loadNewProjectSubmitEvent() {
+  const projectNameInput = document.querySelector('.project-name-input');
+  projectNameInput.parentElement.addEventListener('submit', (e) => { //create a function that only does this
     e.preventDefault();
     data.newProject(projectNameInput.value);
     createProjectTab(projectNameInput.value);
@@ -25,22 +59,6 @@ function loadEvents(){
     toggleDisplay(projectNameInput)
     updateForm();
   })
-
-
-
-  taskForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const taskTitle = document.querySelector('.title');
-    const taskPriority = document.querySelector('#priority-select');
-    const taskProject = document.querySelector('#project-select');
-    data.newTask(taskTitle.value, taskPriority.value, taskProject.value);
-    loadProject(taskProject.value);
-    toggleDisplay(taskForm);
-
-    clearInput(taskTitle);
-    taskPriority.value = 'Low';
-  }) 
-  
 }
 
 function createProjectTab(projectName) {
@@ -58,16 +76,6 @@ function createProjectTab(projectName) {
   console.log(data.getProjects())
   //add the option to delete this tab, also it should be a div rather than a button
 }
-
-// function createProjectTab(projectName) {
-//   const tabContainer = document.querySelector('#projects-tab-container')
-//   const tab = document.createElement('button');
-//   tab.addEventListener('click', (e) => loadProject(e.target.textContent))
-//   tab.textContent = projectName;
-//   tabContainer.append(tab);
-//   console.log(data.getProjects())
-//   //add the option to delete this tab, also it should be a div rather than a button
-// }
 
 function loadProject(projectName) {
   const projectContainer = document.querySelector("#project-container");
@@ -172,8 +180,23 @@ function updateForm() {
   })
 }
 
-function toggleDisplay(element) {
-  element.classList.toggle('hidden');
+
+
+
+function loadProjectTabClickEvents() {
+  const eventHandler = (e) => {
+      loadProject(e.target.textContent)
+  }
+  getAllTabs().forEach(btn => btn.addEventListener('click', eventHandler))
+}
+
+//tools
+
+function resetForm() {
+  clearInput(taskDisplayController.title);
+  clearInput(taskDisplayController.description);
+  clearInput(taskDisplayController.date);
+  taskDisplayController.priority.value = 'Low';
 }
 
 function getAllTabs() {
@@ -183,18 +206,8 @@ function getAllTabs() {
   return tabsArray;
 }
 
-function applyTabClickEvents() {
-  const eventHandler = (e) => {
-      loadProject(e.target.textContent)
-  }
-  console.log(getAllTabs())
-  getAllTabs().forEach(btn => btn.removeEventListener('click', eventHandler))
-  getAllTabs().forEach(btn => btn.addEventListener('click', eventHandler))
+function toggleDisplay(element) {
+  element.classList.toggle('hidden');
 }
-
-// let eventHandler = (e) => {
-//   loadProject(e.target.textContent)
-// }
-// applyTabClickEvents(eventHandler)
 
 export { loadPage }

@@ -113,4 +113,13 @@ if task property project is undefined, that task would go under Inbox
 
 
 
-Our tas
+When I click on the edit btn on a task:
+
+It will clone the new task form, and change a few components:
+1 - change New to Edit
+2 - change add to Save 
+
+the save btn would have a new event listener, either the form would listen to submit, or the btn would listen for a click. 
+
+We would then need to find that task in the tasks array in data, and have it changed with task methods such as editTitle(textcontent) => changes the task.name
+
