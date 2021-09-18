@@ -33,17 +33,22 @@
 
 
   <form action="#" id="new-task-form" class="hidden">
-    <label for="task-title">Task:
+    <h2>New</h2>
+    <label for="task-title" class="title-input">Task:
       <input type="text" class="title" required>
     </label>
-    <br>
-    <label for="task-project">Project:
-      <select name="projects" id="project-select">
 
-      </select>
+    <textarea class="description-input" name="" id="" cols="30" rows="8" placeholder="Description..."></textarea>
+    
+    <label for="" class="due-date-input">Due:
+      <input type="date">
     </label>
-    <br>
-      <label for="priority"> Priority:
+    
+    <label for="task-project" class="project-select">Project:
+      <select name="projects" id="project-select"></select>
+    </label>
+    
+      <label for="priority" class="priority-select"> Priority:
         <select name="priority" id="priority-select">
           <option value="Low">Low</option>
           <option value="Moderate">Moderate</option>
@@ -52,8 +57,7 @@
       </label>
 
     </label>
-    <br>
-    <label for=""></label>
+    
     <button class="submit-task-btn">add</button>
   </form>
 

@@ -55,13 +55,16 @@ html {
 #project-container {
   width: 100%;
   .tasks-container {
-
+    :first-child {
+      position: relative;
+    }
     >* {
       display: flex;
       flex-direction: row;
+      flex-wrap: wrap;
       // background-color: red;
       width: 50%;
-      height: 40px;
+      height: fit-content;
 
       // p {
       //   margin: 0;
@@ -71,7 +74,7 @@ html {
 
       .task-checkbox-container {
         width: fit-content;
-        height: 100%;
+        height: 40px;
         background-color: green;
         display: flex;
         flex-direction: row-reverse;
@@ -112,21 +115,80 @@ html {
         background-color: red;
         font-size: 2.5em;
         border-radius: 0px 50px 50px 0px;
-        height: 100%;
+        height: 40px;
       }
+      
     }
-
   }
 
+}
+
+
+
+
+
+
+
+
+body { //bypass so class hidden can work
+  form {
+    display: grid;
+  }
+}
+#new-task-form {
+  background-color: rgb(103, 144, 190);
+  border-radius: 10px;
+  position: absolute;
+  padding: 20px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  grid-column-gap: 10px;
+  grid-template-areas:
+  "header header"
+  "title ."
+  "desc date"
+  "desc project"
+  "desc priority"
+  "desc btn";
+    h2 {
+      grid-area: header;
+      margin: 0;
+      font-size: 1.3em;
+      font-weight: 400;
+      margin-bottom: 20px;
+    }
+    .title-input {
+      grid-area: title;
+      padding-bottom: 10px;
+      display: flex;
+      input {
+        margin-left: 5px;
+        flex: 1;
+      }
+    }
+    .description-input {
+      grid-area: desc;
+    }
+    .due-date-input {
+      grid-area: date;
+    }
+    .project-select {
+      grid-area: project;
+    }
+    .priority-select {
+      grid-area: priority;
+    }
+    button {
+      grid-area: btn;
+      width: fit-content;
+      height: fit-content;
+      justify-self: center;
+      align-self: center;
+    }
 }
 
 .hidden {
   display: none;
 }
 
-#new-task-form {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}

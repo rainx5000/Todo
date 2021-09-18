@@ -119,6 +119,7 @@ function createTask(taskTitle, taskPriority) {
   const dueDate = document.createElement('p');
   const editBtn = document.createElement('button');
   const removeBtn = document.createElement('button');
+  const dropDown = document.createElement('div');
 
   checkbox.type = 'checkbox';
   dueDate.textContent = '10/05/21';
@@ -129,13 +130,14 @@ function createTask(taskTitle, taskPriority) {
   checkboxContainer.append(checkbox);
   titleContainer.append(title);
   dueDateContainer.append(dueDate);
-  task.append(checkboxContainer, titleContainer, dueDateContainer, editBtn, removeBtn);
+  task.append(checkboxContainer, titleContainer, dueDateContainer, editBtn, removeBtn, dropDown);
 
   checkboxContainer.classList.add('task-checkbox-container');
   titleContainer.classList.add('task-title-container');
   dueDateContainer.classList.add('task-due-date-container');
   editBtn.classList.add('task-edit-btn');
   removeBtn.classList.add('task-remove-btn');
+  dropDown.classList.add('drop-down');
   return task
 }
 
@@ -159,6 +161,9 @@ function updateForm() {
   const optionList = Array.from(projectSelect.children).map(option => option.text);
 
   projectList.forEach(name => {
+    console.log(name, 'This Week')
+    if (name === 'Today') return ;
+    if (name === 'This Week') return;
     if (optionList.includes(name)) return;
 
     const option = document.createElement('option');
