@@ -50,15 +50,19 @@ html {
 #project-container {
   width: 100%;
 }
+#project-container .tasks-container :first-child {
+  position: relative;
+}
 #project-container .tasks-container > * {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   width: 50%;
-  height: 40px;
+  height: fit-content;
 }
 #project-container .tasks-container > * .task-checkbox-container {
   width: fit-content;
-  height: 100%;
+  height: 40px;
   background-color: green;
   display: flex;
   flex-direction: row-reverse;
@@ -99,18 +103,62 @@ html {
   background-color: red;
   font-size: 2.5em;
   border-radius: 0px 50px 50px 0px;
-  height: 100%;
+  height: 40px;
+}
+
+body form {
+  display: grid;
+}
+
+#new-task-form {
+  background-color: #6790be;
+  border-radius: 10px;
+  position: absolute;
+  padding: 20px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  grid-column-gap: 10px;
+  grid-template-areas: "header header" "title ." "desc date" "desc project" "desc priority" "desc btn";
+}
+#new-task-form h2 {
+  grid-area: header;
+  margin: 0;
+  font-size: 1.3em;
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+#new-task-form .title-input {
+  grid-area: title;
+  padding-bottom: 10px;
+  display: flex;
+}
+#new-task-form .title-input input {
+  margin-left: 5px;
+  flex: 1;
+}
+#new-task-form .description-input {
+  grid-area: desc;
+}
+#new-task-form .due-date-input {
+  grid-area: date;
+}
+#new-task-form .project-select {
+  grid-area: project;
+}
+#new-task-form .priority-select {
+  grid-area: priority;
+}
+#new-task-form button {
+  grid-area: btn;
+  width: fit-content;
+  height: fit-content;
+  justify-self: center;
+  align-self: center;
 }
 
 .hidden {
   display: none;
-}
-
-#new-task-form {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
 
 /*# sourceMappingURL=style.css.map */
