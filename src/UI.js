@@ -79,7 +79,7 @@ function createProjectTab(projectName) {
 
 function loadProject(projectName) {
   const projectContainer = document.querySelector("#project-container");
-  clearContainer(projectContainer);
+  deleteAllChildren(projectContainer);
 
   projectContainer.append(createProject(projectName));
 }
@@ -108,11 +108,10 @@ function createProject(name) {
   return project
 }
 
-function loadTasks(container, projectName) {
+function loadTasks(projectContainer, projectName) {
   const tasksArray = data.getProjectByName(projectName).filterByName(projectName);
-  console.log(tasksArray, projectName);
   tasksArray.forEach(task => {
-    container.append(createTask(task.title, task.priority));
+    projectContainer.append(createTask(task.getTitle(), task.getPriority()));
   })
 
 }
@@ -127,7 +126,6 @@ function createTask(taskTitle, taskPriority) {
   const dueDate = document.createElement('p');
   const editBtn = document.createElement('button');
   const removeBtn = document.createElement('button');
-  const dropDown = document.createElement('div');
 
   checkbox.type = 'checkbox';
   dueDate.textContent = '10/05/21';
@@ -138,29 +136,31 @@ function createTask(taskTitle, taskPriority) {
   checkboxContainer.append(checkbox);
   titleContainer.append(title);
   dueDateContainer.append(dueDate);
-  task.append(checkboxContainer, titleContainer, dueDateContainer, editBtn, removeBtn, dropDown);
+  task.append(checkboxContainer, titleContainer, dueDateContainer, editBtn, removeBtn);
 
   checkboxContainer.classList.add('task-checkbox-container');
   titleContainer.classList.add('task-title-container');
   dueDateContainer.classList.add('task-due-date-container');
   editBtn.classList.add('task-edit-btn');
   removeBtn.classList.add('task-remove-btn');
-  dropDown.classList.add('drop-down');
   return task
 }
 
-
-
-
-function clearContainer(container) {
-  while (container.children.length !== 0) {
-    container.firstChild.remove();
+function loadProjectTabClickEvents() {
+  const eventHandler = (e) => {
+      loadProject(e.target.textContent)
   }
-
+  getAllTabs().forEach(btn => btn.addEventListener('click', eventHandler))
 }
 
-function clearInput(inputs) {
-  inputs.value = '';
+
+//tools
+
+function resetForm() {
+  clearInput(taskDisplayController.title);
+  clearInput(taskDisplayController.description);
+  clearInput(taskDisplayController.date);
+  taskDisplayController.priority.value = 'Low';
 }
 
 function updateForm() {
@@ -180,25 +180,6 @@ function updateForm() {
   })
 }
 
-
-
-
-function loadProjectTabClickEvents() {
-  const eventHandler = (e) => {
-      loadProject(e.target.textContent)
-  }
-  getAllTabs().forEach(btn => btn.addEventListener('click', eventHandler))
-}
-
-//tools
-
-function resetForm() {
-  clearInput(taskDisplayController.title);
-  clearInput(taskDisplayController.description);
-  clearInput(taskDisplayController.date);
-  taskDisplayController.priority.value = 'Low';
-}
-
 function getAllTabs() {
   const permanentTabs = document.querySelector('#permanent-categories');
   const projectTabs = document.querySelector('#projects-tab-container');
@@ -206,8 +187,18 @@ function getAllTabs() {
   return tabsArray;
 }
 
+function deleteAllChildren(container) {
+  while (container.children.length !== 0) {
+    container.firstChild.remove();
+  }
+}
+
 function toggleDisplay(element) {
   element.classList.toggle('hidden');
+}
+
+function clearInput(inputs) {
+  inputs.value = '';
 }
 
 export { loadPage }

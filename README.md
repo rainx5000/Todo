@@ -123,3 +123,10 @@ the save btn would have a new event listener, either the form would listen to su
 
 We would then need to find that task in the tasks array in data, and have it changed with task methods such as editTitle(textcontent) => changes the task.name
 
+for each task item
+we would have these for example:
+
+const name = 'Do Hw';
+
+function getName = gets the name
+function setName = changes name to new value
