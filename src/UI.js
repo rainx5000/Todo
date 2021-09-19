@@ -15,14 +15,14 @@ function loadEvents(){
 
 }
 
-const taskDisplayController = (() => {
+const taskController = (() => {
   const newForm = document.querySelector('#new-task-form');
-  const formTitle = document.querySelector('.title');
-  const formPriority = document.querySelector('#priority-select');
-  const formProject = document.querySelector('#project-select');
-  const formDescription = document.querySelector('.description-input');
-  const formDate = document.querySelector('#date');
-  const formBtn = document.querySelector('.submit-task-btn');
+  const formTitle = (form) => form.querySelector('.title');
+  const formPriority = (form) => form.querySelector('#priority-select');
+  const formProject = (form) => form.querySelector('#project-select');
+  const formDescription = (form) => form.querySelector('.description-input');
+  const formDate = (form) => form.querySelector('#date');
+  const formBtn = (form) => form.querySelector('.submit-task-btn');
 
   const taskCheckbox = (task) => task.querySelector('.task-checkbox');
   const taskTitle = (task) => task.querySelector('.task-title');
@@ -34,26 +34,34 @@ const taskDisplayController = (() => {
 
 
 
-function loadTaskFormEvents(task) {
+function loadTaskEvents(task) {
 
-  taskDisplayController.taskEditBtn(task).addEventListener('click', editTaskHandler);
+  taskController.taskEditBtn(task).addEventListener('click', editTaskHandler);
 }
 
 function editTaskHandler(e) {
-  console.log(e.target)
-  const editForm = taskDisplayController.newForm.cloneNode(true);
+  // console.log(e.target)
+  const editForm = taskController.newForm.cloneNode(true);
   const body = document.querySelector('body');
 
   editForm.querySelector('h2').textContent = 'Edit';
   editForm.querySelector('button').textContent = 'Save';
-
 
   body.append(editForm);
   editForm.classList.add('edit-form');
 
   toggleDisplay(editForm);
   toggleDisabled(document.querySelector('#content'));
-} //we will make it so when the edit/new forms are clicked, nothing happens when you click outside of that form/
+} 
+
+function submitEditTaskHandler(e) {
+  const editForm = document.querySelector('.edit-form');
+}
+
+function loadEditTaskEvents() {
+
+}
+
   //the edit form is going to scan the values from data, where we will find the tasks it derived from, and apply it to the screen. 
   //Anything we change, tasks from data will also be changed when we submit/or click save//
   //once we clicked submit, we will remove the edit task form from existance.
@@ -64,10 +72,11 @@ function loadTaskFormSubmitEvent() {
 
   taskForm.addEventListener('submit', (e) => { //create a function that only does this
     e.preventDefault();
-    const task = taskDisplayController;
-
-    data.newTask(task.formTitle.value, task.formPriority.value, task.formProject.value, task.formDescription.value, task.formDate.value);
-    loadProject(task.formProject.value);
+    const task = taskController;
+    const newForm = document.querySelector('#new-task-form');
+    data.newTask(task.formTitle(newForm).value, task.formPriority(newForm).value, task.formProject(newForm).value,
+                task.formDescription(newForm).value, task.formDate(newForm).value);
+    loadProject(task.formProject(newForm).value);
     toggleDisplay(taskForm);
     resetForm();
     toggleDisabled(document.querySelector('#content'));
@@ -154,7 +163,7 @@ function loadTasks(projectContainer, projectName) {
   tasksArray.forEach(task => {
     const domTask = createTask(task.getTitle(), task.getPriority());
     projectContainer.append(domTask);
-    loadTaskFormEvents(domTask);
+    loadTaskEvents(domTask);
   })
 
 }
@@ -204,10 +213,11 @@ function loadProjectTabClickEvents() {
 //tools
 
 function resetForm() {
-  clearInput(taskDisplayController.formTitle);
-  clearInput(taskDisplayController.formDescription);
-  clearInput(taskDisplayController.formDate);
-  taskDisplayController.formPriority.value = 'Low';
+  const newForm = document.querySelector('#new-task-form');
+  clearInput(taskController.formTitle(newForm));
+  clearInput(taskController.formDescription(newForm));
+  clearInput(taskController.formDate(newForm));
+  taskController.formPriority(newForm).value = 'Low';
 }
 
 function updateForm() {
