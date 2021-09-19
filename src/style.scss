@@ -192,3 +192,6 @@ body { //bypass so class hidden can work
   display: none;
 }
 
+.disabled {
+  pointer-events: none;
+}

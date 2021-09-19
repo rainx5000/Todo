@@ -12,17 +12,52 @@ function loadEvents(){
   loadAddProjectBtnEvent();
   loadNewProjectSubmitEvent();
   loadTaskFormSubmitEvent();
+
 }
 
 const taskDisplayController = (() => {
-  const title = document.querySelector('.title');
-  const priority = document.querySelector('#priority-select');
-  const project = document.querySelector('#project-select');
-  const description = document.querySelector('.description-input');
-  const date = document.querySelector('#date');
-  const btn = document.querySelector('.submit-task-btn');
-  return {title, priority, project, description, date, btn};
+  const newForm = document.querySelector('#new-task-form');
+  const formTitle = document.querySelector('.title');
+  const formPriority = document.querySelector('#priority-select');
+  const formProject = document.querySelector('#project-select');
+  const formDescription = document.querySelector('.description-input');
+  const formDate = document.querySelector('#date');
+  const formBtn = document.querySelector('.submit-task-btn');
+
+  const taskCheckbox = (task) => task.querySelector('.task-checkbox');
+  const taskTitle = (task) => task.querySelector('.task-title');
+  const taskDueDate = (task) => task.querySelector('.task-dueDate');
+  const taskEditBtn = (task) => task.querySelector('.task-edit-btn');
+  const taskRemoveBtn = (task) => task.querySelector('.task-remove-btn');
+  return {newForm, formTitle, formPriority, formProject, formDescription, formDate, formBtn, taskCheckbox, taskTitle, taskDueDate, taskEditBtn, taskRemoveBtn};
 })()
+
+
+
+function loadTaskFormEvents(task) {
+
+  taskDisplayController.taskEditBtn(task).addEventListener('click', editTaskHandler);
+}
+
+function editTaskHandler(e) {
+  console.log(e.target)
+  const editForm = taskDisplayController.newForm.cloneNode(true);
+  const body = document.querySelector('body');
+
+  editForm.querySelector('h2').textContent = 'Edit';
+  editForm.querySelector('button').textContent = 'Save';
+
+
+  body.append(editForm);
+  editForm.classList.add('edit-form');
+
+  toggleDisplay(editForm);
+  toggleDisabled(document.querySelector('#content'));
+} //we will make it so when the edit/new forms are clicked, nothing happens when you click outside of that form/
+  //the edit form is going to scan the values from data, where we will find the tasks it derived from, and apply it to the screen. 
+  //Anything we change, tasks from data will also be changed when we submit/or click save//
+  //once we clicked submit, we will remove the edit task form from existance.
+  //select content id, and disable pointer-events
 
 function loadTaskFormSubmitEvent() {
   const taskForm = document.querySelector('#new-task-form');
@@ -31,10 +66,11 @@ function loadTaskFormSubmitEvent() {
     e.preventDefault();
     const task = taskDisplayController;
 
-    data.newTask(task.title.value, task.priority.value, task.project.value, task.description.value, task.date.value);
-    loadProject(task.project.value);
+    data.newTask(task.formTitle.value, task.formPriority.value, task.formProject.value, task.formDescription.value, task.formDate.value);
+    loadProject(task.formProject.value);
     toggleDisplay(taskForm);
     resetForm();
+    toggleDisabled(document.querySelector('#content'));
   }) 
 }
 
@@ -73,7 +109,7 @@ function createProjectTab(projectName) {
   tabsContainer.append(tabContainer);
   tabContainer.append(projectBtn, removeBtn);
   removeBtn.classList.add('remove-project-btn');
-  console.log(data.getProjects())
+
   //add the option to delete this tab, also it should be a div rather than a button
 }
 
@@ -104,14 +140,21 @@ function createProject(name) {
     project.append(newTaskBtn, title, tasksContainer);
   }
   loadTasks(tasksContainer, name);
-  newTaskBtn.addEventListener('click', (e) => toggleDisplay(document.querySelector('#new-task-form')));
+
+  newTaskBtn.addEventListener('click', (e) => {
+    toggleDisplay(document.querySelector('#new-task-form'));
+    toggleDisabled(document.querySelector('#content'));
+  })
+
   return project
 }
 
 function loadTasks(projectContainer, projectName) {
   const tasksArray = data.getProjectByName(projectName).filterByName(projectName);
   tasksArray.forEach(task => {
-    projectContainer.append(createTask(task.getTitle(), task.getPriority()));
+    const domTask = createTask(task.getTitle(), task.getPriority());
+    projectContainer.append(domTask);
+    loadTaskFormEvents(domTask);
   })
 
 }
@@ -139,10 +182,14 @@ function createTask(taskTitle, taskPriority) {
   task.append(checkboxContainer, titleContainer, dueDateContainer, editBtn, removeBtn);
 
   checkboxContainer.classList.add('task-checkbox-container');
+  checkbox.classList.add('task-checkbox');
   titleContainer.classList.add('task-title-container');
+  title.classList.add('task-title');
   dueDateContainer.classList.add('task-due-date-container');
+  dueDate.classList.add('task-dueDate');
   editBtn.classList.add('task-edit-btn');
   removeBtn.classList.add('task-remove-btn');
+
   return task
 }
 
@@ -157,10 +204,10 @@ function loadProjectTabClickEvents() {
 //tools
 
 function resetForm() {
-  clearInput(taskDisplayController.title);
-  clearInput(taskDisplayController.description);
-  clearInput(taskDisplayController.date);
-  taskDisplayController.priority.value = 'Low';
+  clearInput(taskDisplayController.formTitle);
+  clearInput(taskDisplayController.formDescription);
+  clearInput(taskDisplayController.formDate);
+  taskDisplayController.formPriority.value = 'Low';
 }
 
 function updateForm() {
@@ -195,6 +242,9 @@ function deleteAllChildren(container) {
 
 function toggleDisplay(element) {
   element.classList.toggle('hidden');
+}
+function toggleDisabled(element) {
+  element.classList.toggle('disabled');
 }
 
 function clearInput(inputs) {

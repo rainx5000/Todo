@@ -161,4 +161,8 @@ body form {
   display: none;
 }
 
+.disabled {
+  pointer-events: none;
+}
+
 /*# sourceMappingURL=style.css.map */
