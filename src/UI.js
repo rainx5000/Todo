@@ -99,7 +99,7 @@ const taskController = (() => {
       option.text = name;
       projectSelect.appendChild(option);
     })
-        formProject.value = getActivePoject();
+        formProject.value = getActiveProject();
   }
 
   function getEditFormValues(task) {
@@ -263,6 +263,8 @@ function createProject(name) {
   taskController.loadTasks(tasksContainer, name);
 
   newTaskBtn.addEventListener('click', (e) => {
+    console.log(taskController.formProject(taskController.newForm).value)
+    taskController.formProject(taskController.newForm).value = getActiveProject();
     toggleDisplay(document.querySelector('#new-task-form'));
     toggleDisabled(document.querySelector('#content'));
   })
@@ -284,7 +286,7 @@ function loadProjectTabClickEvents() {
 //tools
 
 
-function getActivePoject() {
+function getActiveProject() {
   const projectContainer = document.querySelector('#project-container');
   return projectContainer.querySelector('h2').textContent;
 }
