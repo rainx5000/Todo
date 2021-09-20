@@ -90,7 +90,7 @@ const taskController = (() => {
     const optionList = Array.from(projectSelect.children).map(option => option.text);
   
     projectList.forEach(name => {
-      console.log(name, 'This Week')
+      // console.log(name, 'This Week')
       if (name === 'Today') return ;
       if (name === 'This Week') return;
       if (optionList.includes(name)) return;
@@ -126,6 +126,7 @@ const taskController = (() => {
 
   function loadTaskEvents(task) {
     taskEditBtn(task).addEventListener('click', editTaskHandler);
+    taskRemoveBtn(task).addEventListener('click', removeTaskHandler);
     function editTaskHandler(e) {
       const editForm = newForm.cloneNode(true);
       const body = document.querySelector('body');
@@ -151,6 +152,15 @@ const taskController = (() => {
         loadProject(taskData.getProject());
       }
     } 
+    console.log(taskRemoveBtn(task), 'hELLO???')
+
+
+    function removeTaskHandler(e) {
+      const taskData = data.getTaskByName(taskTitle(task).textContent);
+      const projectName = taskData.getProject();
+      data.removeTask(taskData);
+      loadProject(projectName);
+    }
   }
 
 
@@ -180,6 +190,8 @@ const taskController = (() => {
 function loadPage() {
   //all of the clickevents that we need, like all of the buttons on the controls, should be a function
   loadEvents();
+  console.log(data.getProjects())
+  renderProjectTabs(data.getProjects())
   loadProject('Inbox');
   taskController.updateFormProjectList();
 }
@@ -209,8 +221,9 @@ function loadNewProjectSubmitEvent() {
   const projectNameInput = document.querySelector('.project-name-input');
   projectNameInput.parentElement.addEventListener('submit', (e) => { //create a function that only does this
     e.preventDefault();
+    console.log('yo')
     data.newProject(projectNameInput.value);
-    createProjectTab(projectNameInput.value);
+    renderProjectTabs();
     loadProject(projectNameInput.value);
     clearInput(projectNameInput);
     toggleDisplay(projectNameInput)
@@ -219,6 +232,8 @@ function loadNewProjectSubmitEvent() {
 }
 
 function createProjectTab(projectName) {
+
+
   const tabsContainer = document.querySelector('#projects-tab-container');
   const tabContainer = document.createElement('div');
   const projectBtn = document.createElement('button');
@@ -226,11 +241,15 @@ function createProjectTab(projectName) {
 
   removeBtn.innerHTML = '&#215;';
   projectBtn.addEventListener('click', (e) => loadProject(e.target.textContent))
+
   projectBtn.textContent = projectName;
   tabsContainer.append(tabContainer);
   tabContainer.append(projectBtn, removeBtn);
   removeBtn.classList.add('remove-project-btn');
 
+  removeBtn.addEventListener('click', (e) => {
+    deleteProject(e);
+  });
   //add the option to delete this tab, also it should be a div rather than a button
 }
 
@@ -239,6 +258,33 @@ function loadProject(projectName) {
   deleteAllChildren(projectContainer);
 
   projectContainer.append(createProject(projectName));
+
+}
+
+function deleteProject(e) {
+  const projectTabContainer = e.target.parentElement;
+  const projectData = data.getProjectByName(projectTabContainer.firstChild.textContent);
+  data.removeProject(projectData);
+  renderProjectTabs();
+}
+
+function renderProjectTabs () {
+  const domTabsArray = getAllTabs();
+  const dataTabsNames = getProjectsDataArray().map(tab => tab.getProjectName());
+  const domTabsNames = domTabsArray.map(tab => tab.firstChild.textContent);
+
+  dataTabsNames.forEach(tab => {
+    if (domTabsNames.includes(tab)) return;
+    createProjectTab(tab);
+  })
+
+  domTabsArray.forEach(tab => {
+    if (dataTabsNames.includes(tab.firstChild.textContent)) return;
+    if (tab.firstChild.textContent === getActiveProject()) loadProject('Inbox');
+    
+    tab.remove();
+  })
+
 }
 
 function createProject(name) {
@@ -313,6 +359,10 @@ function toggleDisabled(element) {
 
 function clearInput(inputs) {
   inputs.value = '';
+}
+
+function getProjectsDataArray() {
+  return data.getProjects();
 }
 
 export { loadPage }

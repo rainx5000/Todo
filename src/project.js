@@ -14,11 +14,13 @@ export default function Project(projectName, val = false) {
     //how we will filter tasks that are die today/this week
   }
   const isnonProject = () => nonProject;
+  const getProjectName = () => name;
 
   return {
     name,
     filteredTasks,
     filterByName,
-    isnonProject
+    isnonProject,
+    getProjectName
   }
 }
