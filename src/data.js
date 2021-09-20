@@ -25,6 +25,9 @@ const data = (() => {
   const getProjectByName = (name) => {
     return getProjects().filter(project => project.name === name)[0];
   }
+  const getTaskByName = (name) => {
+    return getTasks().filter(task => task.getTitle() === name)[0];
+  }
 
   return {
     tasks,
@@ -33,7 +36,8 @@ const data = (() => {
     newTask,
     getTasks,
     getProjects,
-    getProjectByName
+    getProjectByName,
+    getTaskByName
   }
 })()
 
