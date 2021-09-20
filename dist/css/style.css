@@ -76,7 +76,6 @@ html {
 }
 #project-container .tasks-container > * .task-title-container {
   flex: 1;
-  background-color: gray;
   display: flex;
 }
 #project-container .tasks-container > * .task-title-container :first-child {
@@ -84,7 +83,6 @@ html {
   padding-left: 5px;
 }
 #project-container .tasks-container > * .task-due-date-container {
-  background-color: gray;
   display: flex;
 }
 #project-container .tasks-container > * .task-due-date-container :first-child {
@@ -163,6 +161,14 @@ body form {
 
 .disabled {
   pointer-events: none;
+}
+
+.high {
+  background-color: #fc9d9a;
+}
+
+.moderate {
+  background-color: #edcea1;
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -1,4 +1,5 @@
 import {data} from './data'
+import { compareAsc, format } from 'date-fns'
 
 const taskController = (() => {
   const newForm = document.querySelector('#new-task-form');
@@ -20,14 +21,14 @@ const taskController = (() => {
   function loadTasks(projectContainer, projectName) {
     const tasksArray = data.getProjectByName(projectName).filterByName(projectName);
     tasksArray.forEach(task => {
-      const domTask = createTask(task.getTitle(), task.getPriority());
+      const domTask = createTask(task.getTitle(), task.getPriority(), task.getDate());
       projectContainer.append(domTask);
       console.log(domTask);
       loadTaskEvents(domTask);
     })
   }
 
-  function createTask(taskTitle, taskPriority) {
+  function createTask(taskTitle, taskPriority, taskDate) {
     const task = document.createElement('div');
     const checkboxContainer = document.createElement('div');
     const checkbox = document.createElement('input');
@@ -39,8 +40,14 @@ const taskController = (() => {
     const removeBtn = document.createElement('button');
 
     checkbox.type = 'checkbox';
-    dueDate.textContent = '10/05/21';
+
+    taskDate ? dueDate.textContent = formatDate() : dueDate.textContent = '';
+
+    dueDateContainer.style.backgroundColor = priorityColor(taskPriority);
+
     title.textContent = taskTitle;
+    titleContainer.style.backgroundColor = priorityColor(taskPriority);
+
     editBtn.innerHTML = '&#x2699;';
     removeBtn.innerHTML = '&#215;';
 
@@ -57,6 +64,26 @@ const taskController = (() => {
     dueDate.classList.add('task-dueDate');
     editBtn.classList.add('task-edit-btn');
     removeBtn.classList.add('task-remove-btn');
+
+    function priorityColor(priority) {
+      switch(priority) {
+        case 'Moderate':
+          return '#edcea1';
+        case 'High':
+          return '#fc9d9a'
+        default:
+          return '#c9f7b2'
+      }
+    }
+
+    function formatDate() {
+      const date = taskDate.split('-');
+      const month = Number(date[1]) - 1;
+      const day = Number(date[2]);
+      const year = Number(date[0]);
+
+      return format(new Date(year, month, day), 'MM-dd-yyyy');
+    }
 
     return task
   }
@@ -270,7 +297,7 @@ function deleteProject(e) {
 
 function renderProjectTabs () {
   const domTabsArray = getAllTabs();
-  const dataTabsNames = getProjectsDataArray().map(tab => tab.getProjectName());
+  const dataTabsNames = data.getProjects().map(tab => tab.getProjectName());
   const domTabsNames = domTabsArray.map(tab => tab.firstChild.textContent);
 
   dataTabsNames.forEach(tab => {
@@ -280,9 +307,8 @@ function renderProjectTabs () {
 
   domTabsArray.forEach(tab => {
     if (dataTabsNames.includes(tab.firstChild.textContent)) return;
-    if (tab.firstChild.textContent === getActiveProject()) loadProject('Inbox');
-    
-    tab.remove();
+    if (tab.firstChild.textContent === getActiveProject()) loadProject('Inbox'); //if the project thats going to be removed, switch to Inbox project
+    tab.remove(); //remove project
   })
 
 }
@@ -317,8 +343,6 @@ function createProject(name) {
 
   return project
 }
-
-
 
 
 function loadProjectTabClickEvents() {
@@ -359,10 +383,6 @@ function toggleDisabled(element) {
 
 function clearInput(inputs) {
   inputs.value = '';
-}
-
-function getProjectsDataArray() {
-  return data.getProjects();
 }
 
 export { loadPage }
