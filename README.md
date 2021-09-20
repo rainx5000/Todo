@@ -130,3 +130,40 @@ const name = 'Do Hw';
 
 function getName = gets the name
 function setName = changes name to new value
+
+
+When I click on add task, Project, should be preselected under the project that is being shown onto the page.
+
+
+
+create renderProjectTabs(DataTabsArray); // ['school', 'gym', 'frat']
+  const domTabsArray = [tab, tab, tab]
+  const domTabsNameArray = domTabsArray.map(domtab => domtab.firstChild.textcontent) // ['school', 'gym', 'practice']
+
+  dataTabsArray.foreach(
+    if domTabsNameArray.included(tab.getTitle()) return //if dom tab is included
+                                                        //in the array, do nothing
+    data.newProject(tab.getTitle());                //else create new tab
+    createProjectTab(tab.getTitle());
+  )
+
+  domTabsNameArray.forEach(tabName    //if tab from data, is included in dom tab
+    if DataTabsArray.included(!tabName) return      //do nothing
+    
+    data.removeProject(tabName)                                       
+  )
+
+tabCreation should only be based on the projects tabs, if
+
+we will use date-fns for today and this week
+
+
+
+Low - default = light green
+Moderate = light orange
+High = light red
+
+
+
+When we click on Today or This week console.log the time of NOW
+

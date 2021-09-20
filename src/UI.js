@@ -19,7 +19,12 @@ const taskController = (() => {
 
 
   function loadTasks(projectContainer, projectName) {
-    const tasksArray = data.getProjectByName(projectName).filterByName(projectName);
+    let tasksArray = data.getProjectByName(projectName).filterByName(projectName);
+    if (projectName === "This Week" || projectName == "Today") {
+      console.log('YO');
+      tasksArray = data.getProjectByName(projectName).filterByTime(projectName);
+    }
+
     tasksArray.forEach(task => {
       const domTask = createTask(task.getTitle(), task.getPriority(), task.getDate());
       projectContainer.append(domTask);
@@ -100,6 +105,8 @@ const taskController = (() => {
       toggleDisplay(taskForm);
       _resetForm();
       toggleDisabled(document.querySelector('#content'));
+
+      console.log(data.getTasks()[0].getDate())
     }) 
   }
 
@@ -173,13 +180,14 @@ const taskController = (() => {
       function saveTaskHandler(e) {
         e.preventDefault();
         setEditFormValues(task);
+        const taskName = formTitle(editForm).value
+
         editForm.remove();
         toggleDisabled(document.querySelector('#content'));
-        const taskData = data.getTaskByName(taskTitle(task).textContent);
+        const taskData = data.getTaskByName(taskName);
         loadProject(taskData.getProject());
       }
     } 
-    console.log(taskRemoveBtn(task), 'hELLO???')
 
 
     function removeTaskHandler(e) {
@@ -334,6 +342,7 @@ function createProject(name) {
   }
   taskController.loadTasks(tasksContainer, name);
 
+
   newTaskBtn.addEventListener('click', (e) => {
     console.log(taskController.formProject(taskController.newForm).value)
     taskController.formProject(taskController.newForm).value = getActiveProject();
@@ -384,5 +393,6 @@ function toggleDisabled(element) {
 function clearInput(inputs) {
   inputs.value = '';
 }
+
 
 export { loadPage }
