@@ -40,8 +40,6 @@ const data = (() => {
   }
 
   return {
-    tasks,
-    projects,
     newProject,
     newTask,
     getTasks,

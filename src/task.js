@@ -3,7 +3,6 @@
 import { data } from "./data";
 
 export default function Task(taskTitle, taskPriority, taskProject, taskDesc, taskDate, id) {
-  let TaskId = id;
   let title = taskTitle;
   let description = taskDesc;
   let priority = taskPriority;
@@ -21,11 +20,6 @@ export default function Task(taskTitle, taskPriority, taskProject, taskDesc, tas
   const getProject = () => project;
   const setProject = (value) => project = value;
 
-  const getId = () => id;
-
-
-
-
   return {
     getTitle,
     setTitle,
@@ -36,7 +30,6 @@ export default function Task(taskTitle, taskPriority, taskProject, taskDesc, tas
     getDate,
     setDate,
     getProject,
-    setProject,
-    getId
+    setProject
   }
 }

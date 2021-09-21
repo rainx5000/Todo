@@ -161,7 +161,9 @@ const taskController = (() => {
   function loadTaskEvents(task) {
     taskEditBtn(task).addEventListener('click', editTaskHandler);
     taskRemoveBtn(task).addEventListener('click', removeTaskHandler);
+    taskCheckbox(task).addEventListener('click', toggleCompleteTask);
     function editTaskHandler(e) {
+      e.target.blur(); //unfocus the edit btn, so enter key won't activate the edit btn again
       const editForm = newForm.cloneNode(true);
       const body = document.querySelector('body');
     
@@ -195,6 +197,9 @@ const taskController = (() => {
       const projectName = taskData.getProject();
       data.removeTask(taskData);
       loadProject(projectName);
+    }
+    function toggleCompleteTask (e) {
+      taskTitle(task).classList.toggle('completed');
     }
   }
 

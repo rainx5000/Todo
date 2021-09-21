@@ -167,3 +167,12 @@ High = light red
 
 When we click on Today or This week console.log the time of NOW
 
+We will have a method inside of project.js
+
+We will run filterByTime only when we have This week or Today as our project name
+
+If today, we will filter out everything that is due today.
+
+if this week, we will filter out everything that is due for the next 7 days
+
+1999-07-10

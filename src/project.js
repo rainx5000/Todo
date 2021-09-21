@@ -21,19 +21,14 @@ export default function Project(projectName, val = false) {
 
     } else if (time === "This Week"){
       const lastDay = addDays(now, 7);
-      const formattedDay = format(lastDay, "dd")
+      const formattedDay = format(lastDay, "dd");
       const formattedMonth = format(lastDay, 'MM');
-      console.log('yo')
-
 
       return data.getTasks().filter(task => {
         const taskDay = task.getDate().split('-');
-
         return (taskDay[2] <= formattedDay && taskDay[1] === formattedMonth);
       })
     }
-
-
   }
   const isnonProject = () => nonProject;
   const getProjectName = () => name;
