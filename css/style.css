@@ -171,4 +171,8 @@ body form {
   background-color: #edcea1;
 }
 
+.completed {
+  text-decoration: line-through;
+}
+
 /*# sourceMappingURL=style.css.map */
