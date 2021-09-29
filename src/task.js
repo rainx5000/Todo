@@ -21,6 +21,11 @@ export default function Task(taskTitle, taskPriority, taskProject, taskDesc, tas
   const setProject = (value) => project = value;
 
   return {
+    title,
+    description,
+    priority,
+    dueDate,
+    project,
     getTitle,
     setTitle,
     getDescription,

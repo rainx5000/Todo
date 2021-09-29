@@ -3,9 +3,11 @@ import Task from './task';
 
 const data = (() => {
   let storedProjectsArray = JSON.parse(localStorage.getItem('projectArray'));
+  let storedTasksArray = JSON.parse(localStorage.getItem('taskArray'));
   let renderedProjects = [];
+  let renderedTasks = [];
 
-  const tasks = [];
+  let tasks = renderedTasks;
   let projects = renderedProjects;
 
 
@@ -20,7 +22,19 @@ const data = (() => {
     console.log(projects);
   }
 
+  const loadTasksFromStorage = () => {
+    console.log(storedTasksArray, 'yesssss')
+    if (storedTasksArray == null) return []
+    storedTasksArray.map(task => {
+      renderedProjects = [];
+      tasks.push(new Task(task.title, task.priority, task.project, task.description, task.dueDate));
+      return tasks;
+    })
+    console.log(tasks);
+  }
+
   renderedProjects = loadProjectsFromStorage();
+  renderedTasks = loadTasksFromStorage();
 
   const newProject = (name) => {
     const project = Project(name);
@@ -32,7 +46,8 @@ const data = (() => {
   }
   const newTask = (title, priority, project, description, date) => {
     const task = Task(title, priority, project, description, date);
-    tasks.push(task);
+    getTasks().push(task);
+    saveTaskToLocalStorage(tasks);
   }
 
   const getTasks = () => tasks;
@@ -54,6 +69,10 @@ const data = (() => {
     localStorage.setItem('projectArray', JSON.stringify(array));
   }
 
+  const saveTaskToLocalStorage = (array) => {
+    localStorage.setItem('taskArray', JSON.stringify(array));
+  }
+
 
   return {
     newProject,
@@ -65,7 +84,9 @@ const data = (() => {
     removeTask,
     removeProject,
     saveProjectToLocalStorage,
-    loadProjectsFromStorage
+    saveTaskToLocalStorage,
+    loadProjectsFromStorage,
+    loadTasksFromStorage
   }
 })()
 

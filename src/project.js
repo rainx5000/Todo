@@ -24,8 +24,9 @@ export default function Project(projectName, val = false) {
       const lastDayFormatted = format(lastDay, "yyyy-MM-dd");
 
       return data.getTasks().filter(task => {
-        const taskDay = task.getDate().split('-');
-        return taskDay <= lastDayFormatted;
+        const taskDay = task.getDate();
+        console.log(taskDay)
+        return (taskDay <= lastDayFormatted) && (taskDay >= format(now, "yyyy-MM-dd"));
       })
     }
   }
