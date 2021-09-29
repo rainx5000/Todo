@@ -176,3 +176,14 @@ If today, we will filter out everything that is due today.
 if this week, we will filter out everything that is due for the next 7 days
 
 1999-07-10
+
+
+
+Local storage -
+
+Lets save our Project names first, and then we can apply it to tasks
+
+Each time we add/remove a project, we would update the localStorage, in turn updating the project variable in data.js whenever we refresh the page it will be that same array
+
+
+we saved the project objects in the local storage, once we got them back, we would apply the prototype to it. 

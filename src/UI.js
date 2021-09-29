@@ -1,5 +1,6 @@
 import {data} from './data'
 import { compareAsc, format } from 'date-fns'
+import Project from './project';
 
 const taskController = (() => {
   const newForm = document.querySelector('#new-task-form');
@@ -229,6 +230,8 @@ const taskController = (() => {
 
 function loadPage() {
   //all of the clickevents that we need, like all of the buttons on the controls, should be a function
+  loadFirstProjects();
+  saveProjectsToStorage(data.getProjects());
   loadEvents();
   console.log(data.getProjects())
   renderProjectTabs(data.getProjects())
@@ -306,6 +309,7 @@ function deleteProject(e) {
   const projectData = data.getProjectByName(projectTabContainer.firstChild.textContent);
   data.removeProject(projectData);
   renderProjectTabs();
+  data.saveProjectToLocalStorage(data.getProjects());
 }
 
 function renderProjectTabs () {
@@ -399,5 +403,20 @@ function clearInput(inputs) {
   inputs.value = '';
 }
 
+function loadFirstProjects() {
+  console.log(data.getProjects())
+  if (data.getProjects().length == 0) {
 
+  data.getProjects().push(new Project("Inbox"));
+  data.getProjects().push(new Project('Today', true));
+
+  data.getProjects().push(new Project('This Week', true));
+  data.getProjects().push(new Project('School'));
+  loadProject('Inbox')
+  }
+}
+
+function saveProjectsToStorage(array) {
+  data.saveProjectToLocalStorage(array);
+}
 export { loadPage }
