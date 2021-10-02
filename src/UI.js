@@ -26,7 +26,7 @@ const taskController = (() => {
     }
 
     tasksArray.forEach(task => {
-      const domTask = createTask(task.getTitle(), task.getPriority(), task.getDate());
+      const domTask = createTask(task.title, task.priority, task.dueDate);
       projectContainer.append(domTask);
       loadTaskEvents(domTask);
     })
@@ -135,24 +135,22 @@ const taskController = (() => {
   function getEditFormValues(task) {
     const form = document.querySelector('.edit-form');
     const taskData = data.getTaskByName(taskTitle(task).textContent);
-    formTitle(form).value = taskData.getTitle();
-    formPriority(form).value = taskData.getPriority();
-    formProject(form).value = taskData.getProject();
-    formDescription(form).value = taskData.getDescription();
-    formDate(form).value = taskData.getDate();
+    formTitle(form).value = taskData.title;
+    formPriority(form).value = taskData.priority;
+    formProject(form).value = taskData.project;
+    formDescription(form).value = taskData.description
+    formDate(form).value = taskData.dueDate;
   }
 
   function setEditFormValues(task) {
     const form = document.querySelector('.edit-form');
     const taskData = data.getTaskByName(taskTitle(task).textContent);
-    taskData.setTitle(formTitle(form).value);
+    taskData.title = formTitle(form).value;
     taskData.description = formDescription(form).value;
-    taskData.setDescription(formDescription(form).value);
-    taskData.setPriority(formPriority(form).value);
-    taskData.setDate(formDate(form).value);
-    // console.log(data.getTasks()[0].description = 'fuck');
+    taskData.priority = formPriority(form).value;
+    taskData.project = formProject(form).value;
+    taskData.dueDate = formDate(form).value;
     data.saveTaskToLocalStorage(data.getTasks())
-    // data.renderedTasks = data.loadTasksFromStorage();
   }
 
 
@@ -186,14 +184,14 @@ const taskController = (() => {
         editForm.remove();
         toggleDisabled(document.querySelector('#content'));
         const taskData = data.getTaskByName(taskName);
-        loadProject(taskData.getProject());
+        loadProject(taskData.project);
       }
     } 
 
 
     function removeTaskHandler(e) {
       const taskData = data.getTaskByName(taskTitle(task).textContent);
-      const projectName = taskData.getProject();
+      const projectName = taskData.project;
       data.removeTask(taskData);
       loadProject(projectName);
     }

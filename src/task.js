@@ -9,32 +9,36 @@ export default function Task(taskTitle, taskPriority, taskProject, taskDesc, tas
   let dueDate = taskDate;
   let project = taskProject
 
-  const getTitle = () => title;
-  const setTitle = (value) => title = value;
-  const getDescription = () => description;
-  const setDescription = (value) => description = value;
-  const getPriority = () => priority;
-  const setPriority = (value) => priority = value;
-  const getDate = () => dueDate;
-  const setDate = (value) => dueDate = value;
-  const getProject = () => project;
-  const setProject = (value) => project = value;
-
   return {
-    title,
-    description,
-    priority,
-    dueDate,
-    project,
-    getTitle,
-    setTitle,
-    getDescription,
-    setDescription,
-    getPriority,
-    setPriority,
-    getDate,
-    setDate,
-    getProject,
-    setProject
+    get title() {
+      return title;
+    },
+    set title(value) {
+      return title = value;
+    },
+    get description() {
+      return description;
+    },
+    set description(value) {
+      return description = value;
+    },
+    get priority() {
+      return priority;
+    },
+    set priority(value) {
+      return priority = value;
+    },
+    get dueDate() {
+      return dueDate;
+    },
+    set dueDate(value) {
+      return dueDate = value;
+    },
+    get project() {
+      return project;
+    },
+    set project(value) {
+      return project = value;
+    },
   }
 }

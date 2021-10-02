@@ -48,7 +48,7 @@ const data = (() => {
 
 
   const getTaskByName = (name) => {
-    return getTasks().filter(task => task.getTitle() === name)[0];
+    return getTasks().filter(task => task.title === name)[0];
   }
 
   const removeTask = (task) => {
