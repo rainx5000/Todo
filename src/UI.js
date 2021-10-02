@@ -22,14 +22,12 @@ const taskController = (() => {
   function loadTasks(projectContainer, projectName) {
     let tasksArray = data.getProjectByName(projectName).filterByName(projectName);
     if (projectName === "This Week" || projectName == "Today") {
-      console.log('YO');
       tasksArray = data.getProjectByName(projectName).filterByTime(projectName);
     }
 
     tasksArray.forEach(task => {
       const domTask = createTask(task.getTitle(), task.getPriority(), task.getDate());
       projectContainer.append(domTask);
-      console.log(domTask);
       loadTaskEvents(domTask);
     })
   }
@@ -106,8 +104,6 @@ const taskController = (() => {
       toggleDisplay(taskForm);
       _resetForm();
       toggleDisabled(document.querySelector('#content'));
-
-      console.log(data.getTasks()[0].getDate())
     }) 
   }
 
@@ -125,7 +121,6 @@ const taskController = (() => {
     const optionList = Array.from(projectSelect.children).map(option => option.text);
   
     projectList.forEach(name => {
-      // console.log(name, 'This Week')
       if (name === 'Today') return ;
       if (name === 'This Week') return;
       if (optionList.includes(name)) return;
@@ -150,12 +145,14 @@ const taskController = (() => {
   function setEditFormValues(task) {
     const form = document.querySelector('.edit-form');
     const taskData = data.getTaskByName(taskTitle(task).textContent);
-    console.log(taskTitle(task).textContent);
     taskData.setTitle(formTitle(form).value);
+    taskData.description = formDescription(form).value;
     taskData.setDescription(formDescription(form).value);
     taskData.setPriority(formPriority(form).value);
     taskData.setDate(formDate(form).value);
-    taskData.setProject(formProject(form).value);
+    // console.log(data.getTasks()[0].description = 'fuck');
+    data.saveTaskToLocalStorage(data.getTasks())
+    // data.renderedTasks = data.loadTasksFromStorage();
   }
 
 
@@ -166,6 +163,7 @@ const taskController = (() => {
     function editTaskHandler(e) {
       e.target.blur(); //unfocus the edit btn, so enter key won't activate the edit btn again
       const editForm = newForm.cloneNode(true);
+      formTitle(editForm).setAttribute('readonly', '');
       const body = document.querySelector('body');
     
       editForm.querySelector('h2').textContent = 'Edit';
@@ -204,16 +202,6 @@ const taskController = (() => {
     }
   }
 
-
-
-  function submitEditTaskHandler(e) {
-    const editForm = document.querySelector('.edit-form');
-  }
-
-  function loadEditTaskEvents() {
-
-  }
-
     //the edit form is going to scan the values from data, where we will find the tasks it derived from, and apply it to the screen. 
     //Anything we change, tasks from data will also be changed when we submit/or click save//
     //once we clicked submit, we will remove the edit task form from existance.
@@ -231,9 +219,9 @@ const taskController = (() => {
 function loadPage() {
   //all of the clickevents that we need, like all of the buttons on the controls, should be a function
   loadFirstProjects();
-  saveProjectsToStorage(data.getProjects());
+  data.loadProjectsFromStorage()
+  data.loadTasksFromStorage()
   loadEvents();
-  console.log(data.getProjects())
   renderProjectTabs(data.getProjects())
   loadProject('Inbox');
   taskController.updateFormProjectList();
@@ -264,7 +252,6 @@ function loadNewProjectSubmitEvent() {
   const projectNameInput = document.querySelector('.project-name-input');
   projectNameInput.parentElement.addEventListener('submit', (e) => { //create a function that only does this
     e.preventDefault();
-    console.log('yo')
     data.newProject(projectNameInput.value);
     renderProjectTabs();
     loadProject(projectNameInput.value);
@@ -353,7 +340,6 @@ function createProject(name) {
 
 
   newTaskBtn.addEventListener('click', (e) => {
-    console.log(taskController.formProject(taskController.newForm).value)
     taskController.formProject(taskController.newForm).value = getActiveProject();
     toggleDisplay(document.querySelector('#new-task-form'));
     toggleDisabled(document.querySelector('#content'));
@@ -404,8 +390,7 @@ function clearInput(inputs) {
 }
 
 function loadFirstProjects() {
-  console.log(data.getProjects())
-  if (data.getProjects().length == 0) {
+  if (JSON.parse(localStorage.getItem('projectArray')).length == 0) {
 
   data.getProjects().push(new Project("Inbox"));
   data.getProjects().push(new Project('Today', true));
@@ -413,9 +398,9 @@ function loadFirstProjects() {
   data.getProjects().push(new Project('This Week', true));
   data.getProjects().push(new Project('School'));
   loadProject('Inbox')
+  data.setTasks(data.loadTasksFromStorage())
   }
 }
-
 function saveProjectsToStorage(array) {
   data.saveProjectToLocalStorage(array);
 }

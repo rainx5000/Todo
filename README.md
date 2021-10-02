@@ -187,3 +187,15 @@ Each time we add/remove a project, we would update the localStorage, in turn upd
 
 
 we saved the project objects in the local storage, once we got them back, we would apply the prototype to it. 
+
+
+
+When we load the page, the local storage will have objects, but without its functions
+
+We will take the storedTasksArray and run a loop
+
+for each task we will replicate that task and push it to the tasks array
+
+
+
+PROBLEM - WHEN WE DELETE A PROJECT, WE WILL DELETE ALL OF THE TASKS UNDER THAT PROJECT

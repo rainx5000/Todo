@@ -2,39 +2,28 @@ import Project from './project'
 import Task from './task';
 
 const data = (() => {
-  let storedProjectsArray = JSON.parse(localStorage.getItem('projectArray'));
-  let storedTasksArray = JSON.parse(localStorage.getItem('taskArray'));
-  let renderedProjects = [];
-  let renderedTasks = [];
-
-  let tasks = renderedTasks;
-  let projects = renderedProjects;
-
-
+  let tasks = [];
+  let projects = [];
 
   const loadProjectsFromStorage = () => {
+    let storedProjectsArray = JSON.parse(localStorage.getItem('projectArray'));
     if (storedProjectsArray == null) return []
-    storedProjectsArray.map(project => {
-      renderedProjects = [];
+    storedProjectsArray.forEach(project => {
+      console.log(projects)
       projects.push(new Project(project.name, project.nonProject))
-      return projects;
     })
-    console.log(projects);
   }
 
   const loadTasksFromStorage = () => {
-    console.log(storedTasksArray, 'yesssss')
+    let storedTasksArray = JSON.parse(localStorage.getItem('taskArray'));
     if (storedTasksArray == null) return []
-    storedTasksArray.map(task => {
-      renderedProjects = [];
+    storedTasksArray.forEach(task => {
       tasks.push(new Task(task.title, task.priority, task.project, task.description, task.dueDate));
-      return tasks;
     })
     console.log(tasks);
   }
 
-  renderedProjects = loadProjectsFromStorage();
-  renderedTasks = loadTasksFromStorage();
+
 
   const newProject = (name) => {
     const project = Project(name);
@@ -51,6 +40,7 @@ const data = (() => {
   }
 
   const getTasks = () => tasks;
+  const setTasks = (value) => tasks = value;
   const getProjects = () => projects;
   const getProjectByName = (name) => {
     return getProjects().filter(project => project.name === name)[0];
@@ -78,6 +68,7 @@ const data = (() => {
     newProject,
     newTask,
     getTasks,
+    setTasks,
     getProjects,
     getProjectByName,
     getTaskByName,
