@@ -26,13 +26,14 @@ const taskController = (() => {
     }
 
     tasksArray.forEach(task => {
-      const domTask = createTask(task.title, task.priority, task.dueDate);
+      console.log(task)
+      const domTask = createTask(task.title, task.priority, task.dueDate, task.completed);
       projectContainer.append(domTask);
       loadTaskEvents(domTask);
     })
   }
 
-  function createTask(taskTitle, taskPriority, taskDate) {
+  function createTask(taskTitle, taskPriority, taskDate, taskCompleted) {
     const task = document.createElement('div');
     const checkboxContainer = document.createElement('div');
     const checkbox = document.createElement('input');
@@ -46,7 +47,13 @@ const taskController = (() => {
     checkbox.type = 'checkbox';
 
     taskDate ? dueDate.textContent = formatDate() : dueDate.textContent = '';
+    console.log(taskCompleted)
+    if (taskCompleted) {
+      checkbox.checked = true;
+      title.classList.add('completed');
 
+    };
+    
     dueDateContainer.style.backgroundColor = priorityColor(taskPriority);
 
     title.textContent = taskTitle;
@@ -196,7 +203,16 @@ const taskController = (() => {
       loadProject(projectName);
     }
     function toggleCompleteTask (e) {
-      taskTitle(task).classList.toggle('completed');
+      const taskData = data.getTaskByName(taskTitle(task).textContent);
+      console.log(taskData.completed)
+      if (taskData.completed) {
+        taskData.completed = false;
+        taskTitle(task).classList.remove('completed');
+      } else {
+        taskData.completed = true;
+        taskTitle(task).classList.add('completed');
+      }
+      data.saveTaskToLocalStorage(data.getTasks())
     }
   }
 

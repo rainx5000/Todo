@@ -18,7 +18,7 @@ const data = (() => {
     let storedTasksArray = JSON.parse(localStorage.getItem('taskArray'));
     if (storedTasksArray == null) return []
     storedTasksArray.forEach(task => {
-      tasks.push(new Task(task.title, task.priority, task.project, task.description, task.dueDate));
+      tasks.push(new Task(task.title, task.priority, task.project, task.description, task.dueDate, task.completed));
     })
     console.log(tasks);
   }

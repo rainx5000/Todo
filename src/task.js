@@ -2,12 +2,13 @@
 
 import { data } from "./data";
 
-export default function Task(taskTitle, taskPriority, taskProject, taskDesc, taskDate, id) {
+export default function Task(taskTitle, taskPriority, taskProject, taskDesc, taskDate, taskCompleted) {
   let title = taskTitle;
   let description = taskDesc;
   let priority = taskPriority;
   let dueDate = taskDate;
-  let project = taskProject
+  let project = taskProject;
+  let completed = taskCompleted;
 
   return {
     get title() {
@@ -39,6 +40,12 @@ export default function Task(taskTitle, taskPriority, taskProject, taskDesc, tas
     },
     set project(value) {
       return project = value;
+    },
+    get completed() {
+      return completed;
+    },
+    set completed(value) {
+      return completed = value;
     },
   }
 }
