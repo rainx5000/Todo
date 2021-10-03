@@ -46,6 +46,11 @@ html {
     color: $secondary-color;
     letter-spacing: 1.25px;
   }
+  .active-project {
+    font-weight: 700;
+    background-color: $secondary-color;
+    color: $complementary-color;
+  }
   >* button:hover {
     font-weight: 700;
   }
@@ -246,3 +251,4 @@ body { //bypass so class hidden can work
 .completed {
   text-decoration: line-through;
 }
+

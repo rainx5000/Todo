@@ -104,6 +104,7 @@ const taskController = (() => {
       data.newTask(task.formTitle(newForm).value, task.formPriority(newForm).value, task.formProject(newForm).value,
                   task.formDescription(newForm).value, task.formDate(newForm).value);
       loadProject(task.formProject(newForm).value);
+      setActiveProject(task.formProject(newForm));
       toggleDisplay(taskForm);
       _resetForm();
       toggleDisabled(document.querySelector('#content'));
@@ -132,7 +133,7 @@ const taskController = (() => {
       option.text = name;
       projectSelect.appendChild(option);
     })
-        formProject(newForm).value = getActiveProject();
+        formProject(newForm).value = getActiveProject().textContent;
   }
 
   function getEditFormValues(task) {
@@ -220,8 +221,11 @@ function loadPage() {
   loadEvents();
   renderProjectTabs(data.getProjects())
   loadProject('Inbox');
+  setActiveProject(document.querySelector('.category-inbox'));
   taskController.updateFormProjectList();
 }
+
+
 
 function loadEvents(){
   loadProjectTabClickEvents();
@@ -241,11 +245,14 @@ function loadAddProjectBtnEvent() {
 
 function loadNewProjectSubmitEvent() {
   const projectNameInput = document.querySelector('.project-name-input');
+  const projectsContainer = document.querySelector('#projects-tab-container');
   projectNameInput.parentElement.addEventListener('submit', (e) => { //create a function that only does this
     e.preventDefault();
     data.newProject(projectNameInput.value);
     renderProjectTabs();
     loadProject(projectNameInput.value);
+    console.log(projectsContainer.lastChild)
+    setActiveProject(projectsContainer.lastChild.firstChild)
     clearInput(projectNameInput);
     toggleDisplay(projectNameInput)
     taskController.updateFormProjectList();
@@ -259,7 +266,12 @@ function createProjectTab(projectName) {
   const removeBtn = document.createElement('button');
 
   removeBtn.innerHTML = '&#215;';
-  projectBtn.addEventListener('click', (e) => loadProject(e.target.textContent))
+  projectBtn.addEventListener('click', (e) => {
+    loadProject(e.target.textContent);
+    setActiveProject(e.target);
+  })
+
+  
 
   projectBtn.textContent = projectName;
   tabsContainer.append(tabContainer);
@@ -274,7 +286,6 @@ function createProjectTab(projectName) {
 function loadProject(projectName) {
   const projectContainer = document.querySelector("#project-container");
   deleteAllChildren(projectContainer);
-
   projectContainer.append(createProject(projectName));
 
 }
@@ -285,6 +296,7 @@ function deleteProject(e) {
   data.removeProject(projectData);
   data.removeTasksByProjectName(projectData.name);
   renderProjectTabs();
+  setActiveProject(document.querySelector('.category-inbox'));
   data.saveProjectToLocalStorage(data.getProjects());
   data.saveTaskToLocalStorage(data.getTasks());
 }
@@ -301,7 +313,7 @@ function renderProjectTabs () {
 
   domTabsArray.forEach(tab => {
     if (dataTabsNames.includes(tab.firstChild.textContent)) return;
-    if (tab.firstChild.textContent === getActiveProject()) loadProject('Inbox'); //if the project thats going to be removed, switch to Inbox project
+    if (tab.firstChild.textContent === getActiveProject().textContent) loadProject('Inbox'); //if the project thats going to be removed, switch to Inbox project
     tab.remove(); //remove project
   })
 
@@ -328,7 +340,7 @@ function createProject(name) {
 
 
   newTaskBtn.addEventListener('click', (e) => {
-    taskController.formProject(taskController.newForm).value = getActiveProject();
+    taskController.formProject(taskController.newForm).value = getActiveProject().textContent;
     toggleDisplay(document.querySelector('#new-task-form'));
     toggleDisabled(document.querySelector('#content'));
   })
@@ -339,7 +351,8 @@ function createProject(name) {
 
 function loadProjectTabClickEvents() {
   const eventHandler = (e) => {
-      loadProject(e.target.textContent)
+      loadProject(e.target.textContent);
+      setActiveProject(e.target);
   }
   getAllTabs().forEach(btn => btn.addEventListener('click', eventHandler))
 }
@@ -350,7 +363,7 @@ function loadProjectTabClickEvents() {
 
 function getActiveProject() {
   const projectContainer = document.querySelector('#project-container');
-  return projectContainer.querySelector('h2').textContent;
+  return projectContainer.querySelector('h2');
 }
 
 function getAllTabs() {
@@ -388,6 +401,19 @@ function loadFirstProjects() {
   loadProject('Inbox')
   data.setTasks(data.loadTasksFromStorage())
   }
+}
+
+function setActiveProject(btn) {
+  const projectTabs = Array.from(document.querySelector('#projects-tab-container').children);
+  const permanentTabs = Array.from(document.querySelector('#permanent-categories').children);
+
+  projectTabs.forEach(tab => {
+    tab.firstChild.classList.remove('active-project');
+  });
+  permanentTabs.forEach(tab => {
+    tab.classList.remove('active-project');
+  })
+  btn.classList.add('active-project');
 }
 
 export { loadPage }

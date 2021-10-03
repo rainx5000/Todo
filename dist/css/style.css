@@ -36,6 +36,11 @@ html {
   color: white;
   letter-spacing: 1.25px;
 }
+#controls-container .active-project {
+  font-weight: 700;
+  background-color: white;
+  color: #3d5a80;
+}
 #controls-container > * button:hover {
   font-weight: 700;
 }
