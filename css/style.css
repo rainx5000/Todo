@@ -89,8 +89,11 @@ html {
 #controls-container .project-name-input {
   width: 60%;
   justify-self: center;
+  margin-top: 5px;
+  padding-left: 10px;
   border-radius: 10px;
   border: none;
+  outline: none;
 }
 #controls-container #add-project:hover {
   background-color: rgba(103, 144, 190, 0.2);
@@ -99,6 +102,44 @@ html {
 
 #project-container {
   width: 100%;
+  background-color: #98c1d9;
+}
+#project-container .project {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+#project-container .project > button {
+  width: fit-content;
+  align-self: center;
+  margin-top: 10px;
+  padding-top: 4px;
+  background-color: #3d5a80;
+  color: white;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  letter-spacing: 1.25px;
+  border-radius: 3px;
+  width: 100px;
+}
+#project-container .project > button:hover {
+  font-weight: 700;
+}
+#project-container .project h2 {
+  align-self: center;
+  color: #3d5a80;
+  letter-spacing: 1.25px;
+  font-size: 2rem;
+  margin: 10px 0;
+}
+#project-container .tasks-container {
+  flex: 1;
+  padding: 40px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 #project-container .tasks-container :first-child {
   position: relative;
@@ -107,7 +148,8 @@ html {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  width: 50%;
+  width: 70%;
+  margin-bottom: 15px;
   height: fit-content;
 }
 #project-container .tasks-container > * .task-checkbox-container {
