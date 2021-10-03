@@ -19,7 +19,7 @@ export default function Project(projectName, val = false) {
 
       return data.getTasks().filter(task => task.dueDate === lastDay)
 
-    } else if (time === "This Week"){
+    } else if (time === "Week"){
       const lastDay = addDays(now, 7);
       const lastDayFormatted = format(lastDay, "yyyy-MM-dd");
 

@@ -1,7 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap'); //font-family: 'Balsamiq Sans', cursive;
+
+$primary-color: #98c1d9;
+$secondary-color: white;
+$complementary-color: #3d5a80;
+$remove-btn-color: rgb(230, 63, 63);
+
 body,
 html {
   width: 100%;
   height: 100vh;
+  font-family: 'Balsamiq Sans', cursive;
 }
 
 #content {
@@ -10,11 +18,37 @@ html {
 }
 
 #controls-container {
-  background-color: gray;
+  background-color: $primary-color;
   width: 250px;
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  .title-container {
+    display: flex;
+  }
+
+
+  .title-logo {
+    width: 40px;
+    vertical-align: middle;
+  }
+
+  h1 {
+    border-bottom: 4px solid $complementary-color;
+  }
+
+  h1, h2 {
+    color: $complementary-color;
+  }
+  >* button {
+    background-color: $complementary-color;
+    color: $secondary-color;
+    letter-spacing: 1.25px;
+  }
+  >* button:hover {
+    font-weight: 700;
+  }
 
   #permanent-categories,
   #projects-tab-container {
@@ -29,9 +63,6 @@ html {
       cursor: pointer;
     }
   }
-  // #permanent-categories {
-
-  // }
   #projects-tab-container {
     div {
       display: flex;
@@ -40,15 +71,31 @@ html {
       }
     }
     button {
-      border-radius: 50px 0 0 50px;
+      border-radius: 10px 0 0 10px;
     }
     .remove-project-btn {
-      font-weight: 700;
+      font-weight: 400;
       font-size: 1.5em;
       padding: 0px 7%;
-      background-color: red;
-      border-radius: 0 50px 50px 0;
+      background-color: $remove-btn-color;
+      border-radius: 0 10px 10px 0;
     }
+    .remove-project-btn:hover {
+      font-weight: 700;
+    }
+  }
+  #add-project {
+    background-color: transparent;
+    color: $complementary-color;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    margin-top: 15px;
+    padding: 5px;
+  }
+  #add-project:hover {
+    background-color: rgba(103, 144, 190, .2);
+    border-radius: 10px;
   }
 }
 
@@ -65,12 +112,6 @@ html {
       // background-color: red;
       width: 50%;
       height: fit-content;
-
-      // p {
-      //   margin: 0;
-      //   padding: 0;
-
-      // }
 
       .task-checkbox-container {
         width: fit-content;
@@ -110,7 +151,7 @@ html {
         cursor: pointer;
       }
       .task-remove-btn {
-        background-color: red;
+        background-color: $remove-btn-color;
         font-size: 2.5em;
         border-radius: 0px 50px 50px 0px;
         height: 40px;

@@ -19,7 +19,7 @@ const taskController = (() => {
 
   function loadTasks(projectContainer, projectName) {
     let tasksArray = data.getProjectByName(projectName).filterByName(projectName);
-    if (projectName === "This Week" || projectName == "Today") {
+    if (projectName === "Week" || projectName == "Today") {
       tasksArray = data.getProjectByName(projectName).filterByTime(projectName);
     }
 
@@ -125,7 +125,7 @@ const taskController = (() => {
   
     projectList.forEach(name => {
       if (name === 'Today') return ;
-      if (name === 'This Week') return;
+      if (name === 'Week') return;
       if (optionList.includes(name)) return;
   
       const option = document.createElement('option');
@@ -383,7 +383,7 @@ function loadFirstProjects() {
   data.getProjects().push(new Project("Inbox"));
   data.getProjects().push(new Project('Today', true));
 
-  data.getProjects().push(new Project('This Week', true));
+  data.getProjects().push(new Project('Week', true));
   data.getProjects().push(new Project('School'));
   loadProject('Inbox')
   data.setTasks(data.loadTasksFromStorage())

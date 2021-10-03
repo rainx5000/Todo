@@ -198,4 +198,4 @@ for each task we will replicate that task and push it to the tasks array
 
 
 
-PROBLEM - WHEN WE DELETE A PROJECT, WE WILL DELETE ALL OF THE TASKS UNDER THAT PROJECT
+possible add a number next to your project that will tell you how many tasks are under that project

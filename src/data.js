@@ -9,7 +9,6 @@ const data = (() => {
     let storedProjectsArray = JSON.parse(localStorage.getItem('projectArray'));
     if (storedProjectsArray == null) return []
     storedProjectsArray.forEach(project => {
-      console.log(projects)
       projects.push(new Project(project.name, project.nonProject))
     })
   }
@@ -20,10 +19,7 @@ const data = (() => {
     storedTasksArray.forEach(task => {
       tasks.push(new Task(task.title, task.priority, task.project, task.description, task.dueDate, task.completed));
     })
-    console.log(tasks);
   }
-
-
 
   const newProject = (name) => {
     const project = Project(name);
@@ -42,10 +38,10 @@ const data = (() => {
   const getTasks = () => tasks;
   const setTasks = (value) => tasks = value;
   const getProjects = () => projects;
+
   const getProjectByName = (name) => {
     return getProjects().filter(project => project.name === name)[0];
   }
-
 
   const getTaskByName = (name) => {
     return getTasks().filter(task => task.title === name)[0];
@@ -59,10 +55,8 @@ const data = (() => {
   }
   const removeTasksByProjectName = (projectName) => {
     const tasksToRemoveArray = getTaskByProject(projectName);
-    console.log(tasksToRemoveArray)
     tasksToRemoveArray.forEach(task => {
       getTasks().splice(getTasks().indexOf(task), 1);
-      console.log(getTasks())
     })
   }
 
