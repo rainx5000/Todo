@@ -136,7 +136,7 @@ const taskController = (() => {
       option.text = name;
       projectSelect.appendChild(option);
     })
-        formProject.value = getActiveProject();
+        formProject(newForm).value = getActiveProject();
   }
 
   function getEditFormValues(task) {
