@@ -201,6 +201,7 @@ const taskController = (() => {
       const projectName = taskData.project;
       data.removeTask(taskData);
       loadProject(projectName);
+      data.saveTaskToLocalStorage(data.getTasks())
     }
     function toggleCompleteTask (e) {
       const taskData = data.getTaskByName(taskTitle(task).textContent);
@@ -309,8 +310,10 @@ function deleteProject(e) {
   const projectTabContainer = e.target.parentElement;
   const projectData = data.getProjectByName(projectTabContainer.firstChild.textContent);
   data.removeProject(projectData);
+  data.removeTasksByProjectName(projectData.name)
   renderProjectTabs();
   data.saveProjectToLocalStorage(data.getProjects());
+  data.saveTaskToLocalStorage(data.getTasks());
 }
 
 function renderProjectTabs () {
@@ -404,7 +407,7 @@ function clearInput(inputs) {
 }
 
 function loadFirstProjects() {
-  if (JSON.parse(localStorage.getItem('projectArray')).length == 0) {
+  if (JSON.parse(localStorage.getItem('projectArray')) == null) {
 
   data.getProjects().push(new Project("Inbox"));
   data.getProjects().push(new Project('Today', true));

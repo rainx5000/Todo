@@ -50,9 +50,20 @@ const data = (() => {
   const getTaskByName = (name) => {
     return getTasks().filter(task => task.title === name)[0];
   }
+  const getTaskByProject = (name) => {
+    return getTasks().filter(task => task.project === name);
+  }
 
   const removeTask = (task) => {
     getTasks().splice(getTasks().indexOf(task), 1);
+  }
+  const removeTasksByProjectName = (projectName) => {
+    const tasksToRemoveArray = getTaskByProject(projectName);
+    console.log(tasksToRemoveArray)
+    tasksToRemoveArray.forEach(task => {
+      getTasks().splice(getTasks().indexOf(task), 1);
+      console.log(getTasks())
+    })
   }
 
   const saveProjectToLocalStorage = (array) => {
@@ -77,7 +88,8 @@ const data = (() => {
     saveProjectToLocalStorage,
     saveTaskToLocalStorage,
     loadProjectsFromStorage,
-    loadTasksFromStorage
+    loadTasksFromStorage,
+    removeTasksByProjectName
   }
 })()
 
