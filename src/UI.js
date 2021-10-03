@@ -17,8 +17,6 @@ const taskController = (() => {
   const taskEditBtn = (task) => task.querySelector('.task-edit-btn');
   const taskRemoveBtn = (task) => task.querySelector('.task-remove-btn');
 
-
-
   function loadTasks(projectContainer, projectName) {
     let tasksArray = data.getProjectByName(projectName).filterByName(projectName);
     if (projectName === "This Week" || projectName == "Today") {
@@ -26,7 +24,6 @@ const taskController = (() => {
     }
 
     tasksArray.forEach(task => {
-      console.log(task)
       const domTask = createTask(task.title, task.priority, task.dueDate, task.completed);
       projectContainer.append(domTask);
       loadTaskEvents(domTask);
@@ -47,7 +44,6 @@ const taskController = (() => {
     checkbox.type = 'checkbox';
 
     taskDate ? dueDate.textContent = formatDate() : dueDate.textContent = '';
-    console.log(taskCompleted)
     if (taskCompleted) {
       checkbox.checked = true;
       title.classList.add('completed');
@@ -160,7 +156,6 @@ const taskController = (() => {
     data.saveTaskToLocalStorage(data.getTasks())
   }
 
-
   function loadTaskEvents(task) {
     taskEditBtn(task).addEventListener('click', editTaskHandler);
     taskRemoveBtn(task).addEventListener('click', removeTaskHandler);
@@ -173,7 +168,6 @@ const taskController = (() => {
     
       editForm.querySelector('h2').textContent = 'Edit';
       editForm.querySelector('button').textContent = 'Save';
-    
     
       body.append(editForm);
       editForm.classList.add('edit-form');
@@ -195,7 +189,6 @@ const taskController = (() => {
       }
     } 
 
-
     function removeTaskHandler(e) {
       const taskData = data.getTaskByName(taskTitle(task).textContent);
       const projectName = taskData.project;
@@ -205,7 +198,6 @@ const taskController = (() => {
     }
     function toggleCompleteTask (e) {
       const taskData = data.getTaskByName(taskTitle(task).textContent);
-      console.log(taskData.completed)
       if (taskData.completed) {
         taskData.completed = false;
         taskTitle(task).classList.remove('completed');
@@ -216,23 +208,12 @@ const taskController = (() => {
       data.saveTaskToLocalStorage(data.getTasks())
     }
   }
-
-    //the edit form is going to scan the values from data, where we will find the tasks it derived from, and apply it to the screen. 
-    //Anything we change, tasks from data will also be changed when we submit/or click save//
-    //once we clicked submit, we will remove the edit task form from existance.
-    //select content id, and disable pointer-events
-
-
-    
-
-
   return {newForm, formTitle, formPriority, formProject, formDescription, formDate, formBtn, taskCheckbox,
       taskTitle, taskDueDate, taskEditBtn, taskRemoveBtn, loadTasks, loadTaskFormSubmitEvent, updateFormProjectList};
 })()
 
 
 function loadPage() {
-  //all of the clickevents that we need, like all of the buttons on the controls, should be a function
   loadFirstProjects();
   data.loadProjectsFromStorage()
   data.loadTasksFromStorage()
@@ -249,11 +230,6 @@ function loadEvents(){
   taskController.loadTaskFormSubmitEvent();
 
 }
-
-
-
-
-
 
 function loadAddProjectBtnEvent() {
   const projectNameInput = document.querySelector('.project-name-input');
@@ -277,8 +253,6 @@ function loadNewProjectSubmitEvent() {
 }
 
 function createProjectTab(projectName) {
-
-
   const tabsContainer = document.querySelector('#projects-tab-container');
   const tabContainer = document.createElement('div');
   const projectBtn = document.createElement('button');
@@ -295,7 +269,6 @@ function createProjectTab(projectName) {
   removeBtn.addEventListener('click', (e) => {
     deleteProject(e);
   });
-  //add the option to delete this tab, also it should be a div rather than a button
 }
 
 function loadProject(projectName) {
@@ -310,7 +283,7 @@ function deleteProject(e) {
   const projectTabContainer = e.target.parentElement;
   const projectData = data.getProjectByName(projectTabContainer.firstChild.textContent);
   data.removeProject(projectData);
-  data.removeTasksByProjectName(projectData.name)
+  data.removeTasksByProjectName(projectData.name);
   renderProjectTabs();
   data.saveProjectToLocalStorage(data.getProjects());
   data.saveTaskToLocalStorage(data.getTasks());
@@ -345,8 +318,6 @@ function createProject(name) {
 
   title.textContent = name;
   newTaskBtn.textContent = "Add Task";
-
-
 
   if (data.getProjectByName(name).isnonProject()) {
     project.append(title, tasksContainer);
@@ -418,7 +389,5 @@ function loadFirstProjects() {
   data.setTasks(data.loadTasksFromStorage())
   }
 }
-function saveProjectsToStorage(array) {
-  data.saveProjectToLocalStorage(array);
-}
+
 export { loadPage }
