@@ -104,6 +104,7 @@ const taskController = (() => {
       data.newTask(task.formTitle(newForm).value, task.formPriority(newForm).value, task.formProject(newForm).value,
                   task.formDescription(newForm).value, task.formDate(newForm).value);
       loadProject(task.formProject(newForm).value);
+      console.log(getActiveProject())
       setActiveProject(task.formProject(newForm));
       toggleDisplay(taskForm);
       _resetForm();
@@ -206,7 +207,7 @@ const taskController = (() => {
         taskData.completed = true;
         taskTitle(task).classList.add('completed');
       }
-      data.saveTaskToLocalStorage(data.getTasks())
+      data.saveTaskToLocalStorage(data.getTasks());
     }
   }
   return {newForm, formTitle, formPriority, formProject, formDescription, formDate, formBtn, taskCheckbox,
@@ -216,10 +217,10 @@ const taskController = (() => {
 
 function loadPage() {
   loadFirstProjects();
-  data.loadProjectsFromStorage()
-  data.loadTasksFromStorage()
+  data.loadProjectsFromStorage();
+  data.loadTasksFromStorage();
   loadEvents();
-  renderProjectTabs(data.getProjects())
+  renderProjectTabs(data.getProjects());
   loadProject('Inbox');
   setActiveProject(document.querySelector('.category-inbox'));
   taskController.updateFormProjectList();
