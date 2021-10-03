@@ -238,8 +238,13 @@ function loadEvents(){
 function loadAddProjectBtnEvent() {
   const projectNameInput = document.querySelector('.project-name-input');
   const addProjectBtn = document.querySelector('#add-project');
-  addProjectBtn.addEventListener('click', (e) => { //create a function that only does this
-    toggleDisplay(projectNameInput)
+  addProjectBtn.addEventListener('mouseup', (e) => { //create a function that only does this
+    toggleDisplay(projectNameInput);
+    projectNameInput.focus();
+    function eventHandler(e) {
+        if(e.target != document.querySelector("#add-project")) document.querySelector('.project-name-input').classList.add('hidden');
+    }
+    window.addEventListener('mousedown', eventHandler, {once: true})
   });
 }
 
@@ -415,5 +420,7 @@ function setActiveProject(btn) {
   })
   btn.classList.add('active-project');
 }
+
+
 
 export { loadPage }

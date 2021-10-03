@@ -86,6 +86,12 @@ html {
   margin-top: 15px;
   padding: 5px;
 }
+#controls-container .project-name-input {
+  width: 60%;
+  justify-self: center;
+  border-radius: 10px;
+  border: none;
+}
 #controls-container #add-project:hover {
   background-color: rgba(103, 144, 190, 0.2);
   border-radius: 10px;
