@@ -430,8 +430,8 @@ function clearInput(inputs) {
 }
 
 function loadFirstProjects() {
+  console.log('faq')
   if (JSON.parse(localStorage.getItem('projectArray')) == null) {
-
   data.getProjects().push(new Project("Inbox"));
   data.getProjects().push(new Project('Today', true));
 
