@@ -25,7 +25,6 @@ export default function Project(projectName, val = false) {
 
       return data.getTasks().filter(task => {
         const taskDay = task.dueDate;
-        console.log(taskDay)
         return (taskDay <= lastDayFormatted) && (taskDay >= format(now, "yyyy-MM-dd"));
       })
     }

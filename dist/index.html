@@ -9,10 +9,14 @@
   <title>todo</title>
 </head>
 <body>
-  
+  <div class="menu-btn">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
   <div id="content">
     <!-- this is where our project-container and controls get appended to -->
-    <nav id="controls-container">
+    <nav id="controls-container" class="controls-container">
       <div class="title-container">
         <img class="title-logo" src="./images/todolist.svg" alt="title logo"> 
         <h1>To-do</h1>
@@ -39,20 +43,20 @@
   <form action="#" id="new-task-form" class="hidden">
     <h2>New</h2>
     <label for="task-title" class="title-input">Task:
-      <input type="text" class="title" required>
+      <input type="text" class="title" id="task-title"required>
     </label>
 
     <textarea class="description-input" name="" id="" cols="30" rows="8" placeholder="Description..."></textarea>
     
-    <label for="" class="due-date-input">Due:
+    <label for="date" class="due-date-input">Due:
       <input type="date" id="date">
     </label>
     
-    <label for="task-project" class="project-select">Project:
+    <label for="project-select" class="project-select">Project:
       <select name="projects" id="project-select"></select>
     </label>
     
-      <label for="priority" class="priority-select"> Priority:
+      <label for="priority-select" class="priority-select"> Priority:
         <select name="priority" id="priority-select">
           <option value="Low">Low</option>
           <option value="Moderate">Moderate</option>

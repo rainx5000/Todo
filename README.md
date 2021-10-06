@@ -199,3 +199,9 @@ for each task we will replicate that task and push it to the tasks array
 
 
 possible add a number next to your project that will tell you how many tasks are under that project
+
+color scheme:
+
+white   -contracts color
+#98c1d9 - light blue
+#3d5a80 - darker blue

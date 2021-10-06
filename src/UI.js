@@ -104,7 +104,6 @@ const taskController = (() => {
       data.newTask(task.formTitle(newForm).value, task.formPriority(newForm).value, task.formProject(newForm).value,
                   task.formDescription(newForm).value, task.formDate(newForm).value);
       loadProject(task.formProject(newForm).value);
-      console.log(getActiveProject())
       setActiveProject(task.formProject(newForm));
       toggleDisplay(taskForm);
       _resetForm();
@@ -233,7 +232,41 @@ function loadEvents(){
   loadAddProjectBtnEvent();
   loadNewProjectSubmitEvent();
   taskController.loadTaskFormSubmitEvent();
+  loadMenuBtnEvents();
 
+}
+
+function loadMenuBtnEvents() {
+  const smallerScreen = window.matchMedia("(max-width: 490px)");
+  const menuBtn = document.querySelector('.menu-btn');
+  const projectContainer = document.querySelector('#project-container');
+  const controlsContainer = document.querySelector("#controls-container");
+  window.addEventListener('load', function() {
+    if (smallerScreen.matches) {
+      menuBtn.classList.remove('hidden');
+      controlsContainer.classList.add('hidden');
+
+    } else {
+      menuBtn.classList.add('hidden');
+      controlsContainer.classList.remove('hidden');
+    }
+  })
+
+  smallerScreen.addEventListener('change', function(mm) {
+    if (mm.matches) {
+      menuBtn.classList.remove('hidden');
+      controlsContainer.classList.add('hidden');
+
+    } else {
+      menuBtn.classList.add('hidden');
+      controlsContainer.classList.remove('hidden');
+    }
+  })
+  menuBtn.addEventListener('click', (e) => {
+    projectContainer.classList.toggle('hidden');
+    controlsContainer.classList.toggle('hidden');
+    controlsContainer.classList.toggle('max-width')
+  })
 }
 
 function loadAddProjectBtnEvent() {
@@ -257,7 +290,6 @@ function loadNewProjectSubmitEvent() {
     data.newProject(projectNameInput.value);
     renderProjectTabs();
     loadProject(projectNameInput.value);
-    console.log(projectsContainer.lastChild)
     setActiveProject(projectsContainer.lastChild.firstChild)
     clearInput(projectNameInput);
     toggleDisplay(projectNameInput)
@@ -333,6 +365,7 @@ function createProject(name) {
   
   project.classList.add('project');
   tasksContainer.classList.add('tasks-container');
+  tasksContainer.style.backgroundImage = "url('./images/pattern-randomized.svg')"
 
   title.textContent = name;
   newTaskBtn.textContent = "Add Task";
