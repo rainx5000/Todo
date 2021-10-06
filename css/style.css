@@ -11,10 +11,13 @@ html {
   height: 100%;
 }
 
-#controls-container {
-  background-color: #98c1d9;
+.controls-container {
   width: 250px;
   display: flex;
+}
+
+#controls-container {
+  background-color: #98c1d9;
   flex-direction: column;
   align-items: center;
 }
@@ -86,6 +89,9 @@ html {
   margin-top: 15px;
   padding: 5px;
 }
+#controls-container form {
+  margin: 0px auto;
+}
 #controls-container .project-name-input {
   width: 60%;
   justify-self: center;
@@ -136,6 +142,8 @@ html {
 #project-container .tasks-container {
   flex: 1;
   padding: 40px;
+  border-left: 5px solid #3d5a80;
+  border-top: 5px solid #3d5a80;
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -148,17 +156,17 @@ html {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  width: 70%;
+  width: 50%;
   margin-bottom: 15px;
   height: fit-content;
 }
 #project-container .tasks-container > * .task-checkbox-container {
   width: fit-content;
-  height: 40px;
-  background-color: green;
+  min-height: 40px;
+  background-color: #98c1d9;
   display: flex;
   flex-direction: row-reverse;
-  border-radius: 50px 0 0 50px;
+  border-radius: 10px 0 0 10px;
 }
 #project-container .tasks-container > * .task-checkbox-container :first-child {
   height: 15px;
@@ -188,12 +196,13 @@ html {
   border: none;
   line-height: 0;
   cursor: pointer;
+  height: 100%;
 }
 #project-container .tasks-container > * .task-remove-btn {
   background-color: #e63f3f;
+  color: white;
   font-size: 2.5em;
-  border-radius: 0px 50px 50px 0px;
-  height: 40px;
+  border-radius: 0px 10px 10px 0px;
 }
 
 body form {
@@ -218,10 +227,12 @@ body form {
   font-weight: 400;
   margin-bottom: 20px;
 }
+#new-task-form label {
+  display: flex;
+}
 #new-task-form .title-input {
   grid-area: title;
   padding-bottom: 10px;
-  display: flex;
 }
 #new-task-form .title-input input {
   margin-left: 5px;
@@ -247,8 +258,25 @@ body form {
   align-self: center;
 }
 
+.menu-btn {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  top: 20px;
+  left: 30px;
+  cursor: pointer;
+}
+.menu-btn > * {
+  width: 100%;
+  height: 5px;
+  background-color: #3d5a80;
+}
+
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .disabled {
@@ -265,6 +293,55 @@ body form {
 
 .completed {
   text-decoration: line-through;
+}
+
+.max-width {
+  width: 100%;
+}
+
+@media (max-width: 830px) {
+  #project-container .tasks-container > * {
+    width: 70%;
+  }
+}
+@media (max-width: 650px) {
+  #project-container .tasks-container {
+    padding: 40px 5px;
+  }
+  #project-container .tasks-container > * {
+    width: 90%;
+  }
+
+  #new-task-form {
+    width: 80%;
+  }
+
+  body > form {
+    display: flex;
+    flex-direction: column;
+  }
+  body > form label,
+body > form textarea {
+    margin-bottom: 10px;
+  }
+  body > form input {
+    width: 100%;
+    margin-left: 5px;
+  }
+  body > form select {
+    flex: 1;
+    margin-left: 5px;
+  }
+}
+@media (max-width: 490px) {
+  #project-container .tasks-container > * .task-due-date-container {
+    display: none;
+  }
+}
+@media (min-width: 490px) {
+  .menu-btn {
+    display: none;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */
