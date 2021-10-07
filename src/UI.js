@@ -216,7 +216,7 @@ const taskController = (() => {
 
 function loadPage() {
   loadFirstProjects();
-  data.loadProjectsFromStorage();
+  if (data.getProjects().length === 0) data.loadProjectsFromStorage();
   data.loadTasksFromStorage();
   loadEvents();
   renderProjectTabs(data.getProjects());
@@ -430,14 +430,18 @@ function clearInput(inputs) {
 }
 
 function loadFirstProjects() {
-  console.log('faq')
+  console.log(JSON.parse(localStorage.getItem('projectArray')));
   if (JSON.parse(localStorage.getItem('projectArray')) == null) {
+
   data.getProjects().push(new Project("Inbox"));
   data.getProjects().push(new Project('Today', true));
 
   data.getProjects().push(new Project('Week', true));
   data.getProjects().push(new Project('School'));
   loadProject('Inbox')
+
+  data.saveProjectToLocalStorage(data.getProjects());
+
   data.setTasks(data.loadTasksFromStorage())
   }
 }
